@@ -300,6 +300,11 @@ const applyLight = (L, focus, span) => {
   sun.target.position.set(...focus); sun.position.copy(sun.target.position).addScaledVector(d, 120);
   const sc = sun.shadow.camera; sc.left = sc.bottom = -span; sc.right = sc.top = span; sc.near = 1; sc.far = 260; sc.updateProjectionMatrix();
   sun.castShadow = L.shadow !== false;
+  CARDU.uSunDir.value.copy(d);
+  const r = new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld, 0); r.y = 0; r.normalize();
+  const dh = new THREE.Vector3(d.x, 0, d.z).normalize();
+  CARDU.uLightX.value = L.shadow === false ? 0.5 : r.dot(dh);
+  CARDU.uShadowK.value = L.cardShadow ?? 0.64;
   skyU.top.value.set(L.skyTop); skyU.hor.value.set(L.skyHor); scene.fog.color.set(L.skyHor); scene.fog.near = L.fogN ?? 140; scene.fog.far = L.fogF ?? 1100;
   for (const c of clouds) c.material.color.set(L.cloud ?? "#ffffff");
 };
@@ -323,6 +328,25 @@ const DRAW = {
   z: (g, s) => C.fxZ(g, s.t), leaf: (g, s) => C.fxLeaf(g, s.col), snow: (g) => C.fxSnow(g), spark: (g, s) => C.fxSpark(g, s.t), thud: (g, s) => C.fxThud(g, s.t),
 };
 const SIZE = { person: [900, 1000, 975], pig: [600, 420, 405], potato: [200, 160, 150], grave: [360, 520, 505], flowers: [200, 200, 190], bang: [500, 500, 250], puff: [300, 300, 190], smoke: [400, 300, 160], bird: [160, 100, 50], z: [200, 200, 100], leaf: [80, 80, 40], snow: [64, 64, 32], spark: [200, 200, 100], thud: [500, 300, 220] };
+const CARDU = { uLightX: { value: 0 }, uShadowK: { value: 0.64 }, uSide: { value: 0.14 }, uFoot: { value: 0.88 }, uSunDir: { value: new THREE.Vector3(0, 1, 0) } };
+/** card material: flat paint x tint, darkened by the sun's shadow map, a soft far-side falloff and a little foot shade */
+const cardMat = (tex) => {
+  const m = new THREE.MeshLambertMaterial({ map: tex, alphaTest: 0.5, side: THREE.DoubleSide });
+  m.onBeforeCompile = (sh) => {
+    Object.assign(sh.uniforms, CARDU);
+    sh.vertexShader = sh.vertexShader.replace("#include <common>", "#include <common>\nuniform vec3 uSunDir;")
+      .replace("#include <worldpos_vertex>", "#include <worldpos_vertex>\n#ifdef USE_SHADOWMAP\n  worldPosition.xyz += uSunDir * 0.35;\n#endif");
+    sh.fragmentShader = sh.fragmentShader.replace("#include <common>", "#include <common>\nuniform float uLightX, uShadowK, uSide, uFoot;")
+      .replace("#include <shadowmap_pars_fragment>", "#include <shadowmap_pars_fragment>\n#include <shadowmask_pars_fragment>")
+      .replace("#include <opaque_fragment>", `float smk = getShadowMask();
+  float ux = uLightX >= 0.0 ? vMapUv.x : 1.0 - vMapUv.x;
+  float side = 1.0 - uSide * abs(uLightX) * (1.0 - smoothstep(0.2, 0.9, ux));
+  float foot = mix(uFoot, 1.0, smoothstep(0.0, 0.3, vMapUv.y));
+  outgoingLight = diffuseColor.rgb * mix(uShadowK, 1.0, smk) * side * foot;
+#include <opaque_fragment>`);
+  };
+  return m;
+};
 const getCard = (id, type, soft) => {
   let c = cards.get(id);
   if (c && c.type === type) return c;
@@ -332,7 +356,7 @@ const getCard = (id, type, soft) => {
   const geo = new THREE.PlaneGeometry(dw * SU, dh * SU); geo.translate(0, (ay - dh / 2) * SU, 0);
   // origin at the anchor point: plane centre sits (dh/2 - ay) units above... shift so anchor is at y=0
   geo.translate(0, 0, 0);
-  const mat = new THREE.MeshBasicMaterial({ map: tex, alphaTest: soft ? 0.02 : 0.5, transparent: !!soft, depthWrite: !soft, side: THREE.DoubleSide });
+  const mat = soft ? new THREE.MeshBasicMaterial({ map: tex, alphaTest: 0.02, transparent: true, depthWrite: false, side: THREE.DoubleSide }) : cardMat(tex);
   const m = new THREE.Mesh(geo, mat); m.userData.kind = soft ? "soft" : "card"; m.userData.nd = cardND(tex);
   m.customDepthMaterial = new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking, map: tex, alphaTest: 0.5 });
   scene.add(m);
@@ -366,7 +390,7 @@ const updateCards = (specs, tint) => {
     }
     c.mesh.material.color.set(s.glow ? "#ffffff" : tint);
     c.mesh.material.opacity = s.alpha ?? 1;
-    c.mesh.castShadow = s.shadow !== false && !s.soft;
+    c.mesh.castShadow = s.shadow !== false && !s.soft; c.mesh.receiveShadow = !s.soft;
     c.blob.visible = s.blob !== false && !s.soft && s.y === undefined;
     if (c.blob.visible) { const bw = (s.blobW ?? (s.type === "pig" ? 1.0 : 0.75)) * sc; c.blob.scale.set(bw, 1, bw * 0.55); c.blob.position.set(s.x, ground(s.x, s.z) + 0.02, s.z); c.blob.rotation.y = c.mesh.rotation.y; }
   }
@@ -393,7 +417,7 @@ vN = normalize(transformedNormal); vZ = -mvPosition.z; }`,
 });
 const quadCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
 const quad = (frag, uniforms) => { const m = new THREE.ShaderMaterial({ uniforms, vertexShader: "varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0., 1.); }", fragmentShader: frag, depthTest: false, depthWrite: false }); const s = new THREE.Scene(); s.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), m)); return { scene: s, u: uniforms }; };
-const inkQ = quad(`uniform sampler2D tCol, tND; uniform vec2 px; uniform float far, inkR, flash, sat, vig; uniform vec3 inkCol, gain, lift;
+const inkQ = quad(`uniform sampler2D tCol, tND; uniform vec2 px; uniform float far, inkR, flash, sat, vig, contrast; uniform vec3 inkCol, gain, lift, shTint, hiTint;
 varying vec2 vUv;
 float isCard(vec4 nd){ return step(nd.r+nd.g+nd.b, 0.02) * step(nd.a, 0.999); }
 void main(){
@@ -412,10 +436,15 @@ void main(){
   vec3 col = mix(c.rgb, inkCol, ink);
   float l = dot(col, vec3(0.2126,0.7152,0.0722)); col = mix(vec3(l), col, sat);
   col = col*gain + lift;
+  vec3 dd = pow(max(col, 0.), vec3(1./2.2));
+  dd = mix(dd, dd*dd*(3.-2.*dd), contrast);
+  float ld = dot(dd, vec3(0.2126,0.7152,0.0722));
+  dd += shTint*(1.-ld)*(1.-ld) + hiTint*ld*ld;
+  col = pow(max(dd, 0.), vec3(2.2));
   vec2 q = (vUv-0.5)*vec2(1.,0.62); col *= 1. - vig*dot(q,q)*2.6;
   col = mix(col, vec3(1.), flash);
   gl_FragColor = vec4(col, 1.);
-}`, { tCol: { value: rtCol.texture }, tND: { value: rtND.texture }, px: { value: new THREE.Vector2(1 / W, 1 / H) }, far: { value: FAR }, inkR: { value: 2.5 }, flash: { value: 0 }, sat: { value: 1.1 }, vig: { value: 0.22 }, inkCol: { value: new THREE.Color("#241726").convertSRGBToLinear() }, gain: { value: new THREE.Vector3(1, 1, 1) }, lift: { value: new THREE.Vector3(0, 0, 0) } });
+}`, { tCol: { value: rtCol.texture }, tND: { value: rtND.texture }, px: { value: new THREE.Vector2(1 / W, 1 / H) }, far: { value: FAR }, inkR: { value: 2.5 }, flash: { value: 0 }, sat: { value: 1.1 }, vig: { value: 0.22 }, inkCol: { value: new THREE.Color("#241726").convertSRGBToLinear() }, gain: { value: new THREE.Vector3(1, 1, 1) }, lift: { value: new THREE.Vector3(0, 0, 0) }, contrast: { value: 0.2 }, shTint: { value: new THREE.Vector3() }, hiTint: { value: new THREE.Vector3() } });
 const dofQ = quad(`uniform sampler2D tIn, tND; uniform vec2 px; uniform float far, focus, cInf;
 varying vec2 vUv;
 float coc(float d){ return clamp(cInf * abs(1. - focus/max(d,0.01)), 0., cInf); }
@@ -479,7 +508,7 @@ window.renderFrame = (f, dbg = "") => {
   if (WORLD.map.win !== st.mapWin) { WORLD.map.win = st.mapWin; const g = WORLD.map.c.getContext("2d"); g.clearRect(0, 0, 900, 640); C.islandMap(g, st.mapWin); WORLD.map.t.needsUpdate = true; }
   updateCards(S.cardsAt(f, camera.position), L.cardTint);
   // grade
-  inkQ.u.flash.value = S.flashAt(f); inkQ.u.sat.value = L.sat ?? 1.08;
+  inkQ.u.flash.value = S.flashAt(f); inkQ.u.sat.value = L.sat ?? 1.08; inkQ.u.contrast.value = L.contrast ?? 0.2; inkQ.u.shTint.value.set(...(L.shTint ?? [0, 0, 0])); inkQ.u.hiTint.value.set(...(L.hiTint ?? [0, 0, 0]));
   inkQ.u.gain.value.set(...(L.gain ?? [1, 1, 1])); inkQ.u.lift.value.set(...(L.lift ?? [0, 0, 0]));
   const dof = S.dofAt(f); dofQ.u.focus.value = dof.focus; dofQ.u.cInf.value = dof.cInf;
   // passes

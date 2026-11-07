@@ -277,7 +277,7 @@ export const pig = (g, opts = {}) => {
   const two = Math.PI * 2, u = 3.0, sole = 405;
   if (ghost) g.globalAlpha = 0.86;
   const base = ghost ? "#fbeef6" : PIG, sh = ghost ? "#d9c9ea" : PIG_SH, sn = ghost ? "#f7d3e3" : SNOUT, hoof = ghost ? "#b9a8c8" : HOOF;
-  const bob = walk ? 6 * Math.abs(Math.sin(two * phase)) * walk : 0;
+  const bob = walk ? 5 * (0.5 + 0.5 * Math.cos(4 * Math.PI * phase)) * walk : 0;
   const by = 252 - bob;
   // wings (ghost) behind
   if (ghost) for (const s of [1, 0]) {
@@ -288,9 +288,14 @@ export const pig = (g, opts = {}) => {
   }
   // far legs
   const legs = [[200, 0.5, true], [355, 0, true], [222, 0, false], [378, 0.5, false]];
+  // planted feet: the stance foot slides back at body speed (phase comes from distance), the swing foot arcs forward
   const legPts = (x, ph) => {
-    const sw = walk ? Math.sin(two * (phase + ph)) * 22 * walk : 0, up = walk ? Math.max(0, Math.cos(two * (phase + ph))) * 12 * walk : 0;
-    return [[x, by + 70], [x + sw, sole - 12 - up]];
+    if (!walk) return [[x, by + 70], [x, sole - 12]];
+    const S = 80 * walk, c = (((phase + ph) % 1) + 1) % 1;
+    let fx, up;
+    if (c < 0.5) { const s = c / 0.5; fx = S / 2 - S * s; up = 0; }
+    else { const s = (c - 0.5) / 0.5; fx = -S / 2 + S * s - (S / Math.PI) * Math.sin(2 * Math.PI * s); up = 16 * walk * Math.sin(Math.PI * s); }
+    return [[x + fx * 0.25, by + 70], [x + fx, sole - 12 - up]];
   };
   for (const [x, ph, far] of legs) if (far) { const [a, b] = legPts(x, ph); p.limb([a, b], 30, hexMul(base, 0.84), 6); p.limb([[b[0] - 4, b[1]], [b[0] + 4, b[1] + 4]], 26, hoof, 5); }
   // tail

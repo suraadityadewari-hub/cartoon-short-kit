@@ -2,11 +2,13 @@
 # bash finish.sh "Title"  -> out/<slug>.mp4 : one linear gain to -14 LUFS + -1 dBFS limiter, H.264 CRF 17 + AAC, QA
 set -e
 TITLE="$1"; SLUG=$(echo "$TITLE" | tr 'A-Z ' 'a-z_' | tr -cd 'a-z0-9_')
-I=$(ffmpeg -hide_banner -i work/mix.wav -af ebur128 -f null - 2>&1 | grep -E "^\s+I:" | tail -1 | awk '{print $2}')
-G=$(python3 -c "print(-14 - ($I))")
-echo "measured $I LUFS -> gain $G dB"
-ffmpeg -y -v error -i work/mix.wav -af "volume=${G}dB,alimiter=limit=0.891:attack=2:release=50:level=false" -ar 48000 -ac 2 work/master.wav
-ffmpeg -y -v error -framerate 30 -i frames/f%04d.jpg -i work/master.wav -c:v libx264 -preset veryfast -crf 17 -pix_fmt yuv420p -c:a aac -b:a 192k -shortest -movflags +faststart -metadata title="$TITLE" "out/$SLUG.mp4"
+# two-pass loudnorm to -14 LUFS / -1.2 dBTP, then a safety limiter
+J=$(ffmpeg -hide_banner -i work/mix.wav -af loudnorm=I=-14:TP=-1.2:LRA=11:print_format=json -f null - 2>&1 | sed -n '/^{/,/^}/p')
+g() { echo "$J" | python3 -c "import sys,json; print(json.load(sys.stdin)['$1'])"; }
+echo "pass 1: $(g input_i) LUFS, TP $(g input_tp)"
+ffmpeg -y -v error -i work/mix.wav -af "loudnorm=I=-14:TP=-1.2:LRA=11:measured_I=$(g input_i):measured_TP=$(g input_tp):measured_LRA=$(g input_lra):measured_thresh=$(g input_thresh):offset=$(g target_offset):linear=true,alimiter=limit=0.87:attack=2:release=50:level=false" -ar 48000 -ac 2 work/master.wav
+SUBS=""; [ -f work/captions.ass ] && SUBS="-vf subtitles=work/captions.ass:fontsdir=fonts"
+ffmpeg -y -v error -framerate 30 -i frames/f%04d.jpg -i work/master.wav $SUBS -c:v libx264 -preset veryfast -crf 17 -pix_fmt yuv420p -c:a aac -b:a 192k -shortest -movflags +faststart -metadata title="$TITLE" "out/$SLUG.mp4"
 echo "--- loudness"; ffmpeg -hide_banner -i "out/$SLUG.mp4" -af ebur128=peak=true -f null - 2>&1 | grep -E "I:|Peak:" | tail -2
 echo "--- freeze/black"; ffmpeg -hide_banner -i "out/$SLUG.mp4" -vf "freezedetect=n=0.001:d=0.4,blackdetect=d=0.1" -an -f null - 2>&1 | grep -E "freeze_|black_" || echo "none"
 python3 - "$SLUG" <<'PY'

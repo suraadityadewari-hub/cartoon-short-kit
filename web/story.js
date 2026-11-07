@@ -12,6 +12,14 @@ export const glide = (x) => { const u = clamp01(x); return u * u * u * (u * (6 *
 export const easeOut = (x) => 1 - (1 - clamp01(x)) ** 3;
 export const back = (x) => { const u = clamp01(x), c = 1.9; return 1 + (c + 1) * (u - 1) ** 3 + c * (u - 1) ** 2; };
 export const spring = (x) => { const u = Math.max(0, x); return 1 - Math.exp(-6 * u) * Math.cos(11 * u); };
+/** action curve: dips to -antic first (anticipation), then shoots past 1 and settles (overshoot). 0 before f0, 1 after. */
+export const act = (f, f0, dur, antic = 0.15, a = 0.28) => {
+  const u = (f - f0) / dur;
+  if (u <= 0) return 0;
+  if (u < a) return -antic * Math.sin((Math.PI / 2) * (u / a));
+  if (u < 1) return -antic + (1 + antic) * back((u - a) / (1 - a));
+  return 1;
+};
 const ramp = (f, a, b) => clamp01((f - a) / (b - a));
 const lerp = (a, b, t) => a + (b - a) * t;
 const lerp3 = (a, b, t) => [lerp(a[0], b[0], t), lerp(a[1], b[1], t), lerp(a[2], b[2], t)];
@@ -33,11 +41,11 @@ export const T = {
 
 // ---------- lights ----------
 export const LIGHTS = {
-  day: { sun: "#fff3df", sunI: 0.95, sky: "#cfe8ff", ground: "#6f8f4a", hemiI: 0.62, az: -35, el: 48, skyTop: "#4aa3e4", skyHor: "#cfeaf6", cloud: "#ffffff", cardTint: "#ffffff", sat: 1.08, gain: [1.0, 1.0, 1.0] },
-  golden: { sun: "#ffc68c", sunI: 1.05, sky: "#ffd7b0", ground: "#6d5e40", hemiI: 0.55, az: -70, el: 16, skyTop: "#6f8ed6", skyHor: "#ffc89c", cloud: "#ffd8b8", cardTint: "#fff0dc", sat: 1.1, gain: [1.03, 0.98, 0.93] },
-  dusk: { sun: "#ffa8a0", sunI: 0.8, sky: "#c9a8e0", ground: "#4a3f55", hemiI: 0.6, az: -80, el: 9, skyTop: "#3d4a8f", skyHor: "#f2a99a", cloud: "#f6b8b0", cardTint: "#f5dee0", sat: 1.06, gain: [1.0, 0.96, 1.0] },
-  night: { sun: "#a9b8ff", sunI: 0.55, sky: "#6f7fc0", ground: "#283048", hemiI: 0.55, az: 40, el: 40, skyTop: "#14204a", skyHor: "#4d5d98", cloud: "#8a96c8", cardTint: "#b4bfe6", sat: 1.0, gain: [0.95, 0.98, 1.08] },
-  hall: { sun: "#ffe9c8", sunI: 0.75, sky: "#ffe6c4", ground: "#6a3d2a", hemiI: 0.75, az: 20, el: 35, skyTop: "#3a2a24", skyHor: "#3a2a24", cloud: "#ffffff", cardTint: "#fff4e6", sat: 1.08, shadow: false, fogN: 400, fogF: 2000, gain: [1.02, 1.0, 0.97] },
+  day: { cardShadow: 0.64, contrast: 0.22, shTint: [-0.01, 0.0, 0.035], hiTint: [0.02, 0.015, 0.0], sun: "#fff3df", sunI: 0.95, sky: "#cfe8ff", ground: "#6f8f4a", hemiI: 0.62, az: -35, el: 48, skyTop: "#4aa3e4", skyHor: "#cfeaf6", cloud: "#ffffff", cardTint: "#ffffff", sat: 1.08, gain: [1.0, 1.0, 1.0] },
+  golden: { contrast: 0.28, shTint: [0.03, -0.01, 0.05], hiTint: [0.04, 0.015, -0.02], cardShadow: 0.6, sun: "#ffc68c", sunI: 1.05, sky: "#ffd7b0", ground: "#6d5e40", hemiI: 0.55, az: -70, el: 16, skyTop: "#6f8ed6", skyHor: "#ffc89c", cloud: "#ffd8b8", cardTint: "#fff0dc", sat: 1.1, gain: [1.03, 0.98, 0.93] },
+  dusk: { contrast: 0.25, shTint: [0.03, 0.0, 0.06], hiTint: [0.03, 0.0, 0.0], cardShadow: 0.62, sun: "#ffa8a0", sunI: 0.8, sky: "#c9a8e0", ground: "#4a3f55", hemiI: 0.6, az: -80, el: 9, skyTop: "#3d4a8f", skyHor: "#f2a99a", cloud: "#f6b8b0", cardTint: "#f5dee0", sat: 1.06, gain: [1.0, 0.96, 1.0] },
+  night: { contrast: 0.2, shTint: [0.0, 0.01, 0.06], hiTint: [0.0, 0.0, 0.02], cardShadow: 0.7, sun: "#a9b8ff", sunI: 0.55, sky: "#6f7fc0", ground: "#283048", hemiI: 0.55, az: 40, el: 40, skyTop: "#14204a", skyHor: "#4d5d98", cloud: "#8a96c8", cardTint: "#b4bfe6", sat: 1.0, gain: [0.95, 0.98, 1.08] },
+  hall: { cardShadow: 0.64, contrast: 0.26, shTint: [0.02, 0.0, 0.02], hiTint: [0.04, 0.02, 0.0], sun: "#ffe9c8", sunI: 0.75, sky: "#ffe6c4", ground: "#6a3d2a", hemiI: 0.75, az: 20, el: 35, skyTop: "#3a2a24", skyHor: "#3a2a24", cloud: "#ffffff", cardTint: "#fff4e6", sat: 1.08, shadow: false, fogN: 400, fogF: 2000, gain: [1.02, 1.0, 0.97] },
 };
 const lerpLight = (a, b, t) => {
   const o = {};
@@ -105,16 +113,24 @@ const CAMS = {
   12: [[960, [-0.85, 2.15, -498.3], [-1.15, 2.05, -502.6], 40, 0], [1018, [-0.9, 2.2, -498.6], [-1.15, 2.1, -502.6], 39, 0], [1046, [-0.9, 3.0, -495.0], [-1.0, 3.15, -503], 42, 0], [1090, [-0.9, 2.95, -495.6], [-1.0, 3.2, -503], 40, 0]],
   13: [[1090, [7.5, 6.8, 16.5], [2.5, 2.4, 3], 44, 0], [1128, [7.0, 6.2, 15.6], [2.7, 2.4, 3.5], 43, 0], [1170, [3.9, 2.55, 9.6], [3.4, 2.2, 6.2], 36, 0], [TOTAL, [3.85, 2.5, 9.3], [3.45, 2.3, 6.2], 34, 0]],
 };
+/** shots whose camera keys are joined with a Catmull-Rom curve; the others glide straight between keys */
+export const CURVED = new Set([]);
 const KICKS = [[T.bang, 0.06], [1060, 0.05], [T.tetap, 0.02]];
 export const camAt = (f) => {
-  const s = shotAt(f), keys = CAMS[s.id];
-  let k0 = keys[0], k1 = keys[keys.length - 1];
-  for (let i = 0; i < keys.length - 1; i++) if (f >= keys[i][0] && f <= keys[i + 1][0]) { k0 = keys[i]; k1 = keys[i + 1]; break; }
-  if (f > k1[0]) k0 = k1;
+  const s = shotAt(f), keys = CAMS[s.id], n = keys.length;
+  let i = 0;
+  while (i < n - 2 && f > keys[i + 1][0]) i++;
+  const k0 = keys[i], k1 = keys[Math.min(i + 1, n - 1)];
   const t = k1[0] === k0[0] ? 0 : glide((f - k0[0]) / (k1[0] - k0[0]));
-  const pos = lerp3(k0[1], k1[1], t), look = lerp3(k0[2], k1[2], t);
+  const P = (j) => keys[Math.max(0, Math.min(n - 1, j))];
+  const cr = (idx) => { // Catmull-Rom through the key points: curved, continuous moves
+    const p0 = P(i - 1)[idx], p1 = P(i)[idx], p2 = P(i + 1)[idx], p3 = P(i + 2)[idx], t2 = t * t, t3 = t2 * t;
+    return [0, 1, 2].map((c) => 0.5 * (2 * p1[c] + (-p0[c] + p2[c]) * t + (2 * p0[c] - 5 * p1[c] + 4 * p2[c] - p3[c]) * t2 + (-p0[c] + 3 * p1[c] - 3 * p2[c] + p3[c]) * t3));
+  };
+  const curved = CURVED.has(s.id) && n > 2;
+  const pos = curved ? cr(1) : lerp3(k0[1], k1[1], t), look = curved ? cr(2) : lerp3(k0[2], k1[2], t);
   // creep + kicks
-  const cr = 0.015; pos[0] += cr * Math.sin(f * 0.031); pos[1] += cr * Math.sin(f * 0.023 + 1);
+  const crp = 0.015; pos[0] += crp * Math.sin(f * 0.031); pos[1] += crp * Math.sin(f * 0.023 + 1);
   for (const [kf, amp] of KICKS) if (f >= kf && f < kf + 8) { const u = (f - kf) / 8, a = amp * (1 - u) * (1 - u); pos[0] += a * Math.sin(f * 2.9); pos[1] += a * Math.cos(f * 3.7); look[1] += a * 0.6 * Math.sin(f * 4.1); }
   return { pos, look, fov: lerp(k0[3], k1[3], t), roll: lerp(k0[4], k1[4], t) };
 };
@@ -175,8 +191,8 @@ export const cardsAt = (f, camPos) => {
     const tense = s.id === 10, aim = { armF: "aim", armB: "aim", rifle: true };
     const look = tense ? (Math.sin(f * 0.25) > 0 ? 0.9 : -0.6) : 0.6;
     const sw = tense ? clamp01((f - 812) / 60) : 0;
-    add(P("us0", US(0), 0.55, 26, 1, { ...aim, expr: tense ? "nervous" : "angry", look, sweat: sw }, f, 3));
-    add(P("uk0", UK(0), -0.55, 26.2, -1, { ...aim, expr: tense ? "scared" : "angry", look, sweat: sw }, f, 5));
+    add(P("us0", US(0), 0.55, 26, 1, { ...aim, expr: tense ? "nervous" : "angry", look, sweat: sw, tilt: tense ? 4 * act(f, T.tapi - 4, 10) : 0 }, f, 3));
+    add(P("uk0", UK(0), -0.55, 26.2, -1, { ...aim, expr: tense ? "scared" : "angry", look, sweat: sw, tilt: tense ? 4 * act(f, T.tapi - 2, 10) : 0 }, f, 5));
     if (tense) {
       for (let i = 1; i < 3; i++) {
         add(P("us" + i, US(i), 0.6 + 1.5 * i, 26.8 + 0.6 * i, 1, { ...aim, expr: i % 2 ? "nervous" : "stern", sweat: sw * 0.7 }, f, 10 + i));
@@ -186,7 +202,7 @@ export const cardsAt = (f, camPos) => {
       // the pig between them, munching; looks up at the camera on "babi"
       const look = f >= T.babi1 - 4;
       const chew = look ? 0 : 0.5 + 0.5 * Math.sin(f * 0.8);
-      add({ id: "pig", type: "pig", x: 0.15, z: 25.75, facing: -1, scale: 1.0, opts: { expr: look ? "content" : "munch", chew, cheek: look ? 0 : 1, bandana: true, spud: look ? -1 : 0.6, dip: look ? 0 : 0.25, earW: look ? Math.sin(f * 0.6) : 0, tail: f * 9 } });
+      add({ id: "pig", type: "pig", x: 0.15, z: 25.75, facing: -1, scale: 1.0, opts: { expr: look ? "content" : "munch", chew, cheek: look ? 0 : 1, bandana: true, spud: look ? -1 : 0.6, dip: 0.25 - 0.4 * act(f, T.babi1 - 6, 9), earW: look ? Math.sin(f * 0.6) : 0, tail: f * 9 } });
       if (look) add(fx("sp1", "spark", ((f - T.babi1) % 18) / 18, 0.95, 2.5, 25.6, 0.45));
     }
   }
@@ -194,14 +210,14 @@ export const cardsAt = (f, camPos) => {
     for (const [x, id] of [[14, "a"], [-14, "b"]]) add(fx("pop" + id, "spark", clamp01((f - 222) / 20), x, 1.6 + 11, 21, 5));
   }
   if (s.id === 3 || s.id === 15) {
-    const x = pigX(f), walking = f < 374, munch = f >= T.makan;
+    const x = pigX(f), walking = f < 374, munch = f >= T.makan, stepPh = ((8.8 - x) / (0.00225 * 1.1) / 160) % 1;
     const chew = munch ? 0.5 + 0.5 * Math.sin((f - T.makan) * 0.85) : 0;
-    add({ id: "pig", type: "pig", x, z: 2.6, facing: -1, scale: 1.1, opts: { phase: (f * 0.065) % 1, walk: walking ? 1 : 0, expr: munch ? "munch" : "happy", chew, dip: munch ? 0.5 + 0.1 * Math.sin(f * 0.4) : 0, cheek: munch ? 1 : 0, bandana: true, spud: munch ? clamp01((f - T.makan) / 30) : -1, tail: f * 11, blink: blinkAt(f, 2) } });
+    add({ id: "pig", type: "pig", x, z: 2.6, facing: -1, scale: 1.1, opts: { phase: stepPh, walk: walking ? 1 : 0, expr: munch ? "munch" : "happy", chew, dip: munch ? 0.5 + 0.1 * Math.sin(f * 0.4) : 0, cheek: munch ? 1 : 0, bandana: true, spud: munch ? clamp01((f - T.makan) / 30) : -1, tail: f * 11, blink: blinkAt(f, 2) } });
     if (munch) add(fx("dirt", "puff", ((f - T.makan) % 14) / 14, x - 0.7, 1.75, 2.75, 0.8));
   }
   if (s.id === 4) {
     const up = smooth((f - 432) / 8);
-    add(P("farmer", C.FARMER, -3.75, -5.6, 1, { expr: f < 436 ? "stern" : "angry", armF: up > 0.5 ? "aim" : "hip", armB: up > 0.5 ? "aim" : "hang", rifle: up > 0.5, look: 0.8 }, f, 7));
+    add(P("farmer", C.FARMER, -3.75, -5.6, 1, { expr: f < 436 ? "stern" : "angry", armF: up > 0.5 ? "aim" : "hip", armB: up > 0.5 ? "aim" : "hang", rifle: up > 0.5, look: 0.8, tilt: -3 * act(f, 428, 10) + (f >= T.bang ? -7 * Math.exp(-(f - T.bang) / 5) : 0) }, f, 7));
     if (f >= T.bang) {
       add(fx("bang", "bang", clamp01((f - T.bang) / 7), -3.75, 2.68, -5.6, 1.2, { glow: true, roll: 0 }));
       add(fx("smoke", "smoke", clamp01((f - T.bang) / 16), -3.75, 2.55, -5.5, 1.6));
@@ -221,7 +237,7 @@ export const cardsAt = (f, camPos) => {
   if (s.id === 6) {
     const shout = f >= T.inggris && f < 578;
     add(P("farmer", C.FARMER, -4.5, -8.9, 1, { expr: "nervous", armF: "hang", armB: "hang", sweat: clamp01((f - 525) / 30), look: 0.9 }, f, 7));
-    add(P("official", C.UK_OFFICIAL, -2.5, -8.3, -1, { expr: shout ? (Math.floor(f / 6) % 2 ? "shout" : "angry") : "stern", armF: "scroll", armB: f > 540 ? "point" : "hang", tilt: shout ? -3 : 0 }, f, 9));
+    add(P("official", C.UK_OFFICIAL, -2.5, -8.3, -1, { expr: shout ? (Math.floor(f / 6) % 2 ? "shout" : "angry") : "stern", armF: "scroll", armB: f > 540 ? "point" : "hang", tilt: -5 * act(f, T.inggris - 4, 10) * (f < 580 ? 1 : 0) }, f, 9));
   }
   if (s.id === 7) {
     const x0 = lerp(20.5, 17.5, (f - 586) / 62);
@@ -257,7 +273,7 @@ export const cardsAt = (f, camPos) => {
     if (u > 0.72) for (let i = 0; i < 4; i++) add({ id: "fl" + i, type: "flowers", x: -3 + i * 2, z: 28.5, col: ["#ffd84a", "#f27f9e"][i % 2], seed: i, scale: 2.2 * smooth((u - 0.72) / 0.2), blob: false, shadow: false });
   }
   if (s.id === 12) {
-    const k = f < 990 ? 1 - smooth((f - 970) / 20) * 1.0 : f < 1056 ? 0.02 * Math.sin(f * 0.3) + 0.02 : f < 1060 ? clamp01((f - 1056) / 4) : 1;
+    const k = f < 990 ? 1 - smooth((f - 970) / 20) : f < 1050 ? 0.02 * Math.sin(f * 0.3) + 0.02 : 0.02 + 0.98 * act(f, 1050, 11, 0.35, 0.55);
     const expr = f < 1062 ? "stern" : "smug";
     add({ ...P("kaiser", C.KAISER, -1.2, -502.6, 1, { armF: "gavel", k: f < 970 ? 1 : k, expr, look: f > 1030 ? 1 : 0.3 }, f, 51), y: 0.55, blob: false });
     if (f >= 1060) add(fx("thud", "thud", clamp01((f - 1060) / 10), -0.55, 1.25, -501.5, 1.3));
