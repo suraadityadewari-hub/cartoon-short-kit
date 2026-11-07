@@ -31,4 +31,9 @@ Needs Node 22+, Python 3 (numpy, scipy, Pillow), ffmpeg, Playwright Chromium.
 ## v4: upstream post chain + HD textures
 - Post chain (mromidev, MIT): world-only ink pass `web/up_ink.js` -> two-stage thin-lens blur `web/up_lensblur.js` -> colour grade `web/up_grade.js` (presets `day` / `golden`, at 50 % strength: `window.GRADE_AMT`) + a white-flash effect, run through `postprocessing` 6.36.7 (`web/index.html` has the import map). Cards, sky, clouds and blobs sit on the NOINK layer (still cast shadows). `DBG=old` renders the previous in-house chain for A/B.
 - HD painted textures `web/up_paint.js`: planks (fence, porch, ship deck, desk), roof tiles, stone, clouds. Terrain keeps vertex-coloured grass + sand.
+
+## v5: two-tone world shading
+- `web/up_shade.js` (mromidev `shade.ts`, MIT): world materials are `twoTone(MeshLambertMaterial)`: lit side = `tLit`, shadow side = `tShade` (+ `tLift`), with a soft terminator (`tTerm`). The per-light values live in `LIGHTS` in `web/story.js` (`tLit, tShade, tLift, tLambert, tSideK, tTerm, tBounce, tSat`) and are pushed to `UpShade.TONE` in `applyLight`.
+- Keep `tShade` warm-ish and fairly light for golden / dusk: a dark blue `tShade` turns grass teal and hulls grey.
+- Cards (characters) keep their own `cardMat`; flags, ensign and leaves use `toonM()`.
 - Rerun `npm i` relinks: `ln -sfn "$(dirname $(node -e "console.log(require.resolve('playwright'))"))" node_modules/playwright` after any npm install.

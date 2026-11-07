@@ -9,6 +9,7 @@ import * as UpInk from "./up_ink.js";
 import * as UpLens from "./up_lensblur.js";
 import * as UpGrade from "./up_grade.js";
 import * as UpPaint from "./up_paint.js";
+import * as UpShade from "./up_shade.js";
 import * as S from "./story.js";
 
 const W = 1080, H = 1920, FAR = 2600;
@@ -28,9 +29,11 @@ gm.minFilter = gm.magFilter = THREE.NearestFilter; gm.needsUpdate = true;
 const MAT = new Map();
 const toon = (key, o = {}) => {
   if (MAT.has(key)) return MAT.get(key);
-  const m = new THREE.MeshToonMaterial({ color: o.color ?? 0xffffff, map: o.map ?? null, gradientMap: gm, side: o.side ?? THREE.FrontSide, vertexColors: !!o.vc });
+  // world materials: Lambert + upstream two-tone shading (lit colour vs bluish shade colour, soft terminator, real sun shadows)
+  const m = UpShade.twoTone(new THREE.MeshLambertMaterial({ color: o.color ?? 0xffffff, map: o.map ?? null, side: o.side ?? THREE.FrontSide, vertexColors: !!o.vc }));
   MAT.set(key, m); return m;
 };
+const toonM = (o) => UpShade.twoTone(new THREE.MeshLambertMaterial(o));
 
 // ---------- geometry helpers / batching ----------
 const BATCH = new Map(); // material -> geometries
@@ -163,7 +166,7 @@ const flagPole = (x, z, h, kind, size) => {
   (kind === "us" ? C.flagUS : C.flagUK)(g, 0, 0, 330, 210);
   const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace;
   const geo = new THREE.PlaneGeometry(1.5 * size, 1.0 * size, 14, 8); geo.translate(0.75 * size, 0, 0);
-  const m = mesh(geo, new THREE.MeshToonMaterial({ map: t, gradientMap: gm, side: THREE.DoubleSide }), "world", true);
+  const m = mesh(geo, toonM({ map: t, side: THREE.DoubleSide }), "world", true);
   m.position.set(x + 0.08 * size, y + h - 0.5 * size, z);
   m.userData.base = geo.attributes.position.array.slice(); m.userData.size = size;
   WORLD.flags.push(m); return m;
@@ -194,7 +197,7 @@ const ship = (x, z, ry) => {
   const c = document.createElement("canvas"); c.width = 330; c.height = 210; C.flagUK(c.getContext("2d"), 0, 0, 330, 210);
   const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace;
   const fgeo = new THREE.PlaneGeometry(4.2, 2.8, 12, 6); fgeo.translate(-2.1, 0, 0);
-  const fm = new THREE.Mesh(fgeo, new THREE.MeshToonMaterial({ map: t, gradientMap: gm, side: THREE.DoubleSide }));
+  const fm = new THREE.Mesh(fgeo, toonM({ map: t, side: THREE.DoubleSide }));
   fm.position.set(-12.6, 9, 0); fm.rotation.y = Math.PI / 2 * 0; fm.userData.kind = "world"; fm.userData.base = fgeo.attributes.position.array.slice(); fm.userData.size = 2.8; fm.userData.dir = -1;
   g.add(fm); WORLD.flags.push(fm);
   add(new THREE.CylinderGeometry(0.08, 0.08, 6, 6), toon("pole"), M4(-12.4, 7.5, 0));
@@ -268,7 +271,7 @@ const buildWorld = () => {
   rocks(); mountains(); hall();
   flush();
   const lg = mergeGeometries(WORLD.leafGeos, false);
-  WORLD.leaf = mesh(lg, new THREE.MeshToonMaterial({ color: 0x5aa548, gradientMap: gm }), "world", true);
+  WORLD.leaf = mesh(lg, toonM({ color: 0x5aa548 }), "world", true);
   // ships
   WORLD.ships = [ship(-24, 92, 0.42), ship(6, 104, 0.35), ship(32, 88, 0.5)];
   // grave set
@@ -311,6 +314,9 @@ const applyLight = (L, focus, span) => {
   const dh = new THREE.Vector3(d.x, 0, d.z).normalize();
   CARDU.uLightX.value = L.shadow === false ? 0.5 : r.dot(dh);
   CARDU.uShadowK.value = L.cardShadow ?? 0.64;
+  const T = UpShade.TONE;
+  T.uLitCol.value.set(...L.tLit); T.uShadeCol.value.set(...L.tShade); T.uShadeLift.value.set(...L.tLift);
+  T.uLambert.value = L.tLambert; T.uSideK.value = L.tSideK; T.uTerm.value = L.tTerm; T.uBounce.value.set(...L.tBounce); T.uSat.value = L.tSat;
   skyU.top.value.set(L.skyTop); skyU.hor.value.set(L.skyHor); scene.fog.color.set(L.skyHor); scene.fog.near = L.fogN ?? 140; scene.fog.far = L.fogF ?? 1100;
   for (const c of clouds) c.material.color.set(L.cloud ?? "#ffffff");
 };
