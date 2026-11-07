@@ -23,3 +23,7 @@ Needs Node 22+, Python 3 (numpy, scipy, Pillow), ffmpeg, Playwright Chromium.
 - Grade: S-curve contrast + split toning per light preset (`contrast`, `shTint`, `hiTint`).
 - Motion: `act(f, f0, dur, antic, a)` anticipation -> overshoot curve; pig walk with planted feet (phase from distance travelled, cycloid swing); optional Catmull-Rom camera per shot (`CURVED`).
 - Mix: music -10 dB vs voice (gated RMS) + 3.5 dB ducking under speech; SFX <= music, peaks <= 0.7x voice. Finish: two-pass loudnorm -14 LUFS / -1.2 dBTP, optional caption burn-in from `work/captions.ass`.
+
+## v3: merged cast
+- People drawn slimmer (single-stroke limbs, ink-dot hands, smaller boots, longer legs) with all our poses kept (aim, scroll, gavel, point, salute...).
+- Side-view walking from upstream `bodySide` (planted feet, IK knees) as card type `personSide`; outfit keys: jacket, pants, boots, hat (`cap`|`shako`|`shako_tall`|`tophat`|`hair`|`bonnet`), cap, belt, buttons, rifle, skin, moustache. Phase from distance travelled: `dist / (2 * step)`, `stride = step / 0.83`. See CREDITS.md.

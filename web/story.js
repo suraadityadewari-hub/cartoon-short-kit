@@ -105,7 +105,7 @@ const CAMS = {
   4: [[425, [-4.95, 3.05, -1.25], [-3.3, 2.8, -5.45], 36, 0], [462, [-4.7, 3.0, -1.85], [-3.3, 2.8, -5.45], 34, 1.5]],
   5: [[462, [5.8, 4.0, 9.5], [2.6, 3.1, 1.5], 44, 0], [510, [5.6, 4.6, 9.2], [2.8, 4.1, 1.8], 42, 0]],
   6: [[510, [-0.8, 3.25, -3.6], [-3.5, 2.75, -8.8], 46, 0], [586, [-1.2, 3.15, -4.3], [-3.5, 2.75, -8.8], 43, 0]],
-  7: [[586, [12.2, 3.0, 36.6], [21, 2.6, 40.6], 40, 0], [648, [10.4, 3.1, 36.2], [19, 2.6, 40.4], 40, 0]],
+  7: [[586, [15.6, 3.1, 36.2], [22.6, 2.5, 40.2], 41, 0], [648, [12.9, 3.1, 36.3], [20.0, 2.5, 40.2], 41, 0]],
   8: [[648, [0, 2.9, 48.6], [2, 6.5, 100], 50, 0], [730, [0, 3.0, 49.6], [3, 7, 100], 48, 0]],
   9: [[730, [0.4, 2.14, 11.3], [0.4, 1.95, 14.0], 34, 0], [800, [0.42, 2.02, 12.0], [0.4, 1.8, 14.0], 30, 0]],
   10: [[800, [0, 3.0, 19.0], [0, 2.6, 26], 40, 0], [883, [0, 2.85, 22.6], [0, 2.72, 26], 36, -3], [890, [0, 2.84, 22.7], [0, 2.72, 26], 36, -3]],
@@ -142,7 +142,7 @@ export const dofAt = (f) => {
     case 15: return { cInf: 11, focus: d([2.9, 2.0, 2.6]) };
     case 4: return { cInf: 10, focus: d([-3.75, 2.9, -5.6]) };
     case 6: return { cInf: 7, focus: d([-3.3, 2.8, -8.7]) };
-    case 7: return { cInf: 5, focus: d([18, 2.6, 40.4]) };
+    case 7: return { cInf: 5, focus: d([x7(f) + 1.5, 2.6, 40]) };
     case 9: return { cInf: 14, focus: lerp(d([0, 2.6, 26]), d([0.4, 1.75, 14.0]), smooth((f - 762) / 16)) };
     case 10: return { cInf: 8, focus: d([0, 2.9, 26]) };
     case 12: return { cInf: f < 1030 ? 7 : 3, focus: d([-1.2, 1.9, -502.6]) };
@@ -170,6 +170,7 @@ export const worldAt = (f) => {
 };
 
 // ---------- the pig's path ----------
+const x7 = (f) => 21 - 0.043 * (f - 586);
 export const pigX = (f) => lerp(8.8, 3.35, smooth((f - 268) / 106));
 const pigWalk = (f) => (f < 374 ? 1 : 0);
 
@@ -240,10 +241,13 @@ export const cardsAt = (f, camPos) => {
     add(P("official", C.UK_OFFICIAL, -2.5, -8.3, -1, { expr: shout ? (Math.floor(f / 6) % 2 ? "shout" : "angry") : "stern", armF: "scroll", armB: f > 540 ? "point" : "hang", tilt: -5 * act(f, T.inggris - 4, 10) * (f < 580 ? 1 : 0) }, f, 9));
   }
   if (s.id === 7) {
-    const x0 = lerp(20.5, 17.5, (f - 586) / 62);
-    for (let i = 0; i < 6; i++) {
-      const row = i % 2, col = Math.floor(i / 2);
-      add(P("m" + i, US(i), x0 + 1.5 * col + 0.3 * row, 40 + 1.0 * row + 0.25 * col, 1, { mode: "march", phase: ((f - 586) / 18 + i * 0.5) % 1, expr: i === 0 ? "determined" : "stern", armF: "order", rifle: true }, f, 30 + i));
+    // a column marching toward the garden, side view with planted feet (upstream bodySide), receding into depth
+    const speed = 0.043, x0 = 21 - speed * (f - 586), step = 0.65;
+    for (let i = 0; i < 5; i++) {
+      const x = x0 + 1.45 * i, dist = speed * (f - 586) + 7;
+      add({ id: "m" + i, type: "personSide", x, z: 40 + 0.15 * i, facing: 1,
+        outfit: { jacket: "#33467a", pants: "#7d93c4", boots: "#241726", hat: "cap", cap: "#2a3866", buttons: "#e8c45a", rifle: true, belt: null, skin: C.SKINS[i % 4], moustache: i % 3 === 1 ? "#4a3426" : undefined },
+        opts: { phase: ((dist / (2 * step)) + i * 0.5) % 1, mode: "march", expr: i === 0 ? "stern" : "neutral", stride: step / 0.83, seed: 30 + i, blink: blinkAt(f, 30 + i) } });
     }
   }
   if (s.id === 8) {

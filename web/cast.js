@@ -13,7 +13,7 @@ export const UK_SOLDIER = (v = 0) => ({ skin: SKINS[(v + 1) % 4], coat: "#c9362f
 export const UK_OFFICIAL = { skin: "#ffe0bf", coat: "#2f3d3a", pants: "#4b4a52", boots: INK, hat: "top", hatCol: "#26232e", moustache: "#8a5a34", build: "stout", vest: "#c9a24a" };
 export const KAISER = { skin: "#ffe0bf", coat: "#2c3b63", pants: "#22283c", boots: INK, hat: "pickel", hatCol: "#1d1f26", whiskers: "#f1f0ea", moustache: "#f1f0ea", build: "stout", epaulettes: "#e8c45a", buttons: "#e8c45a", sash: "#e8b23a" };
 
-const BUILD = { adult: { a: 112, torso: 1.08, legs: 1.22, tw: 0.82 }, stout: { a: 114, torso: 1.12, legs: 1.12, tw: 0.98 } };
+const BUILD = { adult: { a: 112, torso: 1.08, legs: 1.36, tw: 0.82 }, stout: { a: 114, torso: 1.12, legs: 1.26, tw: 0.98 } };
 
 // ---------------- faces ----------------
 const FACE = {
@@ -132,16 +132,16 @@ export const person = (g, o, opts = {}) => {
   const march = mode === "march";
   const bb = (march ? 0.02 * 1000 * Math.cos(2 * two * phase) : 0) + bob;
   const torsoBot = sole - Bd.legs * HH + bb, chin = torsoBot - Bd.torso * HH, hipY = torsoBot - 0.1 * HH;
-  const legCol = mix(o.pants, INK, 0.35), armCol = mix(o.coat, INK, 0.25);
-  const legW = 13 * u, footW = 15 * u;
+  const legCol = mix(o.pants, INK, 0.45), armCol = mix(o.coat, INK, 0.42);
+  const legW = 6.6 * u, footW = 8.5 * u; // slim single-stroke limbs (proportions after the upstream toon.ts cast)
   // ---- legs ----
   const Lft = march ? 70 : 0;
   for (const [side, ph] of [[-1, 0], [1, 0.5]]) {
     const up = Math.max(0, Math.sin(two * (phase + ph))) * Lft;
     const fwd = march ? 18 * u * Math.cos(two * (phase + ph)) : 0;
     const hx = 300 + side * 16 * u, fx = 300 + side * 20 * u + fwd, fy = sole - 6 * u - up;
-    p.limb(curve([hx, hipY], [(hx + fx) / 2 + 3 * u, (hipY + fy) / 2 - up * 0.1], [fx, fy]), legW, side < 0 ? hexMul(legCol, 0.85) : legCol, 4.5 * u);
-    p.limb([[fx - 6 * u, fy], [fx + 16 * u, fy + 1 * u]], footW, o.boots === INK ? "#2a2230" : o.boots, 3.5 * u);
+    p.stroke(curve([hx, hipY], [(hx + fx) / 2 + 3 * u, (hipY + fy) / 2 - up * 0.1], [fx, fy]), legW, side < 0 ? hexMul(legCol, 0.8) : legCol);
+    if (o.boots === INK) p.stroke([[fx - 3 * u, fy], [fx + 12 * u, fy + 0.5 * u]], footW, INK); else p.limb([[fx - 3 * u, fy], [fx + 12 * u, fy + 0.5 * u]], footW, o.boots, 1.6 * u);
   }
   // ---- upper body: rotate about hips ----
   g.save();
@@ -176,11 +176,11 @@ export const person = (g, o, opts = {}) => {
   const B = handFor(armB, -1), F = handFor(armF, 1);
   const drawArm = (side, hd) => {
     const S = sh(side);
-    p.limb(curve(S, hd.e, hd.h), 12 * u, side < 0 ? hexMul(armCol, 0.86) : armCol, 4 * u);
-    p.dot(hd.h[0], hd.h[1], 9 * u, INK); p.dot(hd.h[0], hd.h[1], 6.4 * u, skin);
+    p.stroke(curve(S, hd.e, hd.h), 6 * u, side < 0 ? hexMul(armCol, 0.82) : armCol);
+    p.dot(hd.h[0], hd.h[1], 6 * u, INK);
   };
   // rifle geometry
-  const rifle = (a, b) => { p.band([a, b], "#7a4b2a", 9 * u, 2.5 * u); p.band([lerp2(a, b, 0.55), b], "#8d949c", 4.5 * u, 2 * u); };
+  const rifle = (a, b) => { p.band([a, b], "#7a4b2a", 6 * u, 1.8 * u); p.band([lerp2(a, b, 0.55), b], "#8d949c", 3 * u, 1.4 * u); };
   const lerp2 = (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
   let rifleAB = null;
   if (o.rifle !== false && (armF === "aim" || armF === "port" || armF === "order") && opts.rifle) {

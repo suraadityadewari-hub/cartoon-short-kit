@@ -3,6 +3,7 @@ import * as THREE from "./three.module.js";
 import { mergeGeometries } from "./BufferGeometryUtils.js";
 import * as P from "./paint.js";
 import * as C from "./cast.js";
+import * as UP from "./toon_up.js";
 import * as S from "./story.js";
 
 const W = 1080, H = 1920, FAR = 2600;
@@ -320,6 +321,7 @@ const cardND = (map) => new THREE.ShaderMaterial({
 });
 const DRAW = {
   person: (g, s) => { g.translate(150, 0); C.person(g, s.outfit, s.opts); },
+  personSide: (g, s) => { g.translate(150, 0); UP.bodySide(new UP.Pen(g), s.outfit, s.opts); },
   pig: (g, s) => C.pig(g, s.opts),
   potato: (g, s) => C.potato(g, s.bite ?? 0),
   grave: (g) => C.grave(g),
@@ -327,7 +329,7 @@ const DRAW = {
   bang: (g, s) => C.fxBang(g, s.t), puff: (g, s) => C.fxPuff(g, s.t), smoke: (g, s) => C.fxSmoke(g, s.t), bird: (g, s) => C.fxBird(g, s.t),
   z: (g, s) => C.fxZ(g, s.t), leaf: (g, s) => C.fxLeaf(g, s.col), snow: (g) => C.fxSnow(g), spark: (g, s) => C.fxSpark(g, s.t), thud: (g, s) => C.fxThud(g, s.t),
 };
-const SIZE = { person: [900, 1000, 975], pig: [600, 420, 405], potato: [200, 160, 150], grave: [360, 520, 505], flowers: [200, 200, 190], bang: [500, 500, 250], puff: [300, 300, 190], smoke: [400, 300, 160], bird: [160, 100, 50], z: [200, 200, 100], leaf: [80, 80, 40], snow: [64, 64, 32], spark: [200, 200, 100], thud: [500, 300, 220] };
+const SIZE = { person: [900, 1000, 975], personSide: [900, 1000, 975], pig: [600, 420, 405], potato: [200, 160, 150], grave: [360, 520, 505], flowers: [200, 200, 190], bang: [500, 500, 250], puff: [300, 300, 190], smoke: [400, 300, 160], bird: [160, 100, 50], z: [200, 200, 100], leaf: [80, 80, 40], snow: [64, 64, 32], spark: [200, 200, 100], thud: [500, 300, 220] };
 const CARDU = { uLightX: { value: 0 }, uShadowK: { value: 0.64 }, uSide: { value: 0.14 }, uFoot: { value: 0.88 }, uSunDir: { value: new THREE.Vector3(0, 1, 0) } };
 /** card material: flat paint x tint, darkened by the sun's shadow map, a soft far-side falloff and a little foot shade */
 const cardMat = (tex) => {
