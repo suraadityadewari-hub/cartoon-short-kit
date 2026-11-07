@@ -4,6 +4,11 @@ import { mergeGeometries } from "./BufferGeometryUtils.js";
 import * as P from "./paint.js";
 import * as C from "./cast.js";
 import * as UP from "./toon_up.js";
+import * as PP from "postprocessing";
+import * as UpInk from "./up_ink.js";
+import * as UpLens from "./up_lensblur.js";
+import * as UpGrade from "./up_grade.js";
+import * as UpPaint from "./up_paint.js";
 import * as S from "./story.js";
 
 const W = 1080, H = 1920, FAR = 2600;
@@ -107,12 +112,12 @@ const tree = (x, z, kind, s = 1) => {
   }
 };
 const fence = () => {
-  const post = toon("post", { map: P.planks("#9a6a40", "postw"), color: 0xffffff });
+  const post = toon("post", { map: UpPaint.planksHD(), color: 0xe6cdb6 });
   const pts = []; const X0 = -6, X1 = 6, Z0 = -4, Z1 = 4;
   for (let x = X0; x <= X1 + 0.01; x += 1.5) { pts.push([x, Z0]); pts.push([x, Z1]); }
   for (let z = Z0 + 1.6; z < Z1; z += 1.6) { pts.push([X0, z]); if (z < 1.5 || z > 3.7) pts.push([X1, z]); }
-  for (const [x, z] of pts) box(0.14, 1.15, 0.14, post, x, 1.6, z, 0, 0.5);
-  const rail = (ax, az, bx, bz, y) => { const l = Math.hypot(bx - ax, bz - az); box(l, 0.1, 0.06, post, (ax + bx) / 2, y, (az + bz) / 2, -Math.atan2(bz - az, bx - ax), 1); };
+  for (const [x, z] of pts) box(0.14, 1.15, 0.14, post, x, 1.6, z, 0, 1.6);
+  const rail = (ax, az, bx, bz, y) => { const l = Math.hypot(bx - ax, bz - az); box(l, 0.1, 0.06, post, (ax + bx) / 2, y, (az + bz) / 2, -Math.atan2(bz - az, bx - ax), 1.6); };
   for (const y of [1.6 + 0.45, 1.6 + 0.9]) {
     rail(X0, Z0, X1, Z0, y); rail(X0, Z1, X1, Z1, y); rail(X0, Z0, X0, Z1, y);
     rail(X1, Z0, X1, 1.6, y);
@@ -135,15 +140,15 @@ const garden = () => {
   fence();
 };
 const cabin = (x, z) => {
-  const y = ground(x, z), logs = toon("logs", { map: P.logs() }), roofM = toon("roof", { map: P.shingles("#6e4a3c") }), dark = toon("dark", { color: 0x2a1c1a });
+  const y = ground(x, z), logs = toon("logs", { map: P.logs() }), roofM = toon("roof", { map: UpPaint.roofHD("#9a5a44") }), dark = toon("dark", { color: 0x2a1c1a });
   box(7, 3.2, 5, logs, x, y, z, 0, 2.4);
   const r = new THREE.Mesh(); // roof prism along x
   addB(prismGeo(6, 2.2, 7.8, 2), roofM, M4(x, y + 3.2, z, Math.PI / 2, 0, 0, 1.0, 1, 1));
   box(1.1, 2.0, 0.12, toon("door", { map: P.planks("#7d5234", "doorw") }), x - 1.2, y, z + 2.52, 0, 0.6);
   box(1.0, 0.9, 0.1, toon("win", { color: 0x8fd3ff }), x + 1.6, y + 1.3, z + 2.52);
   box(1.2, 0.12, 0.2, logs, x + 1.6, y + 1.2, z + 2.6, 0, 1);
-  box(0.8, 4.2, 0.8, toon("stone", { map: P.stoneTex() }), x + 2.6, y + 1.4, z - 1.2, 0, 1);
-  box(1.6, 0.12, 1.1, toon("porch", { map: P.planks("#a8744a", "porchw") }), x - 1.2, y, z + 3.0, 0, 1);
+  box(0.8, 4.2, 0.8, toon("stone", { map: UpPaint.stoneHD() }), x + 2.6, y + 1.4, z - 1.2, 0, 1.2);
+  box(1.6, 0.12, 1.1, toon("porch", { map: UpPaint.planksHD() }), x - 1.2, y, z + 3.0, 0, 1.6);
 };
 const tent = (x, z, ry, col) => { const y = ground(x, z); addB(prismGeo(2.8, 2.2, 3.4, 1.4), toon("tent" + col, { map: P.canvasCloth(col) }), M4(x, y, z, ry)); };
 const sentry = (x, z, ry, col) => {
@@ -172,7 +177,7 @@ const ship = (x, z, ry) => {
   const ht = P.hullTex(); ht.wrapT = THREE.ClampToEdgeWrapping;
   const add = (geo, mat, m4) => { const m = new THREE.Mesh(geo, mat); if (m4) m.applyMatrix4(m4); m.castShadow = m.receiveShadow = true; m.userData.kind = "world"; g.add(m); };
   add(hg, toon("hull", { map: ht }));
-  add(new THREE.BoxGeometry(24, 0.3, 6.4), toon("deck", { map: P.planks("#b98a5a", "deckw") }), M4(0, 3.95, 0));
+  add(tboxGeo(24, 0.3, 6.4, 1.6), toon("deck", { map: UpPaint.planksHD() }), M4(0, 3.95, 0));
   const sail = toon("sail", { map: P.canvasCloth("#f4ecd6"), side: THREE.DoubleSide });
   for (const [mx, mh] of [[-6, 17], [1, 20], [8, 15]]) {
     add(new THREE.CylinderGeometry(0.22, 0.32, mh, 8), toon("mast", { color: 0x6b4429 }), M4(mx, 4 + mh / 2, 0));
@@ -207,7 +212,7 @@ const mountains = () => {
   for (const [x, z, s] of [[-260, 260, 60], [300, 330, 45], [-380, -200, 70], [260, -300, 55], [420, 40, 40]]) addB(new THREE.SphereGeometry(s, 12, 8), isl, M4(x, -s * 0.8, z, 0, 0, 0, 1.8, 1, 1));
 };
 const rocks = () => {
-  const r = toon("rock", { map: P.stoneTex() });
+  const r = toon("rock", { map: UpPaint.stoneHD() });
   for (let i = 0; i < 26; i++) { const a = i * 2.39, e = 0.96 + 0.04 * Math.sin(i * 3.3), x = Math.cos(a) * ISL.a * e, z = Math.sin(a) * ISL.b * e; if (Math.abs(x) < 25 && z > 40) continue; addB(new THREE.DodecahedronGeometry(1 + (i % 3) * 0.7, 0), r, M4(x, ground(x, z) + 0.2, z, i, i * 0.7)); }
 };
 const hall = () => {
@@ -225,7 +230,7 @@ const hall = () => {
   }
   for (const x of [-8, 8]) box(1, 9, 1, toon("col", { color: 0xe6dcc8 }), ox + x * 0.82, 0, oz - 5, 0);
   // desk
-  const desk = toon("desk", { map: P.planks("#6b3f22", "deskw") });
+  const desk = toon("desk", { map: UpPaint.planksHD(), color: 0x8a5a40 });
   box(4.2, 1.05, 1.6, desk, ox - 1.2, 0, oz - 1.4, 0, 1);
   box(4.5, 0.12, 1.9, toon("deskTop", { color: 0x3a2418 }), ox - 1.2, 1.05, oz - 1.4);
   box(5.5, 0.55, 2.4, toon("dais", { map: P.planks("#5a3420", "daisw") }), ox - 1.2, 0, oz - 3.0, 0, 1);
@@ -283,7 +288,7 @@ const makeClouds = () => {
   const r = P.rng(5);
   for (let i = 0; i < 16; i++) {
     const a = (i / 16) * Math.PI * 2 + r() * 0.3, d = 700 + r() * 300;
-    const m = new THREE.Mesh(new THREE.PlaneGeometry(1, 0.5), new THREE.MeshBasicMaterial({ map: P.cloud(i % 4), transparent: true, depthWrite: false, fog: false }));
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(1, 0.5), new THREE.MeshBasicMaterial({ map: UpPaint.cloudHD(i % 6), transparent: true, depthWrite: false, fog: false }));
     const s = 140 + r() * 120; m.scale.set(s, s, 1); m.position.set(Math.cos(a) * d, 90 + r() * 120, Math.sin(a) * d);
     m.userData.kind = "soft"; m.userData.cloud = true; scene.add(m); clouds.push(m);
   }
@@ -477,6 +482,27 @@ const swapND = (on) => {
   });
 };
 
+// ---------- upstream post chain (mromidev/claude-animated-shorts, MIT): world ink -> lens blur pre + main -> grade + flash ----------
+const composer = new PP.EffectComposer(renderer, { frameBufferType: THREE.HalfFloatType, multisampling: 4 });
+const inkUp = new UpInk.InkPass(scene, camera);
+const lensUp = new UpLens.LensBlur({ maxCoC: 24, nearScale: 1.2 });
+const gradeUp = new UpGrade.GradeEffect(UpGrade.GRADES.day, 1);
+class FlashEffect extends PP.Effect {
+  constructor() { super("FlashEffect", "uniform float flash; void mainImage(const in vec4 c, const in vec2 uv, out vec4 o) { o = vec4(mix(c.rgb, vec3(1.0), flash), c.a); }", { uniforms: new Map([["flash", new THREE.Uniform(0)]]) }); }
+}
+const flashUp = new FlashEffect();
+composer.addPass(new PP.RenderPass(scene, camera));
+composer.addPass(inkUp);
+composer.addPass(new PP.EffectPass(camera, lensUp.pre));
+composer.addPass(new PP.EffectPass(camera, lensUp.main));
+composer.addPass(new PP.EffectPass(camera, gradeUp, flashUp));
+composer.setSize(W, H);
+sun.shadow.camera.layers.enable(UpInk.NOINK); // cards live on the NOINK layer but still cast shadows
+const GMAP = { day: "day", golden: "golden", dusk: "golden", night: "day", hall: "golden", cycle: "day" };
+const noInkLayers = () => scene.traverse((o) => { if (o.isMesh && ["card", "soft", "blob", "sky"].includes(o.userData.kind)) o.layers.set(UpInk.NOINK); });
+window.GRADE_AMT = 0.5; // upstream presets were fitted to a darker world; half strength keeps our colours alive
+const fwdV = new THREE.Vector3();
+
 // ---------- per-frame ----------
 const v3 = (a) => new THREE.Vector3(a[0], a[1], a[2]);
 const waveFlags = (f) => {
@@ -513,7 +539,18 @@ window.renderFrame = (f, dbg = "") => {
   inkQ.u.flash.value = S.flashAt(f); inkQ.u.sat.value = L.sat ?? 1.08; inkQ.u.contrast.value = L.contrast ?? 0.2; inkQ.u.shTint.value.set(...(L.shTint ?? [0, 0, 0])); inkQ.u.hiTint.value.set(...(L.hiTint ?? [0, 0, 0]));
   inkQ.u.gain.value.set(...(L.gain ?? [1, 1, 1])); inkQ.u.lift.value.set(...(L.lift ?? [0, 0, 0]));
   const dof = S.dofAt(f); dofQ.u.focus.value = dof.focus; dofQ.u.cInf.value = dof.cInf;
-  // passes
+  if (dbg !== "old") {
+    noInkLayers();
+    const sid = S.shotAt(f), gl = GMAP[sid.id === 10 ? "golden" : sid.light] ?? "day";
+    if (gradeUp._light !== gl) { gradeUp.set(UpGrade.GRADES[gl]); gradeUp._light = gl; }
+    gradeUp.amount = dbg.startsWith("amt=") ? parseFloat(dbg.slice(4)) : (window.GRADE_AMT ?? 1);
+    flashUp.uniforms.get("flash").value = S.flashAt(f);
+    lensUp.focus = Math.max(0.3, dof.focus); lensUp.cInf = dof.cInf;
+    composer.render();
+    return renderer.domElement.toDataURL("image/jpeg", 0.93);
+  }
+  // passes (old in-house chain, kept for A/B: DBG=old)
+  renderer.autoClear = true;
   renderer.setRenderTarget(rtCol); renderer.setClearColor(0x000000, 1); renderer.render(scene, camera);
   swapND(true); const fog = scene.fog; scene.fog = null; const shOn = renderer.shadowMap.enabled; renderer.shadowMap.enabled = false;
   renderer.setRenderTarget(rtND); renderer.setClearColor(new THREE.Color(0.5, 0.5, 1.0), 1.0); renderer.clear(); renderer.render(scene, camera);

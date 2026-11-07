@@ -6,7 +6,7 @@ Worked example: "Perang Babi" (40 s, 1080x1920, 30 fps).
 ## Setup (new project)
 ```
 mkdir -p ~/shorts/<slug> && cp -r cartoon-short-kit/* ~/shorts/<slug>/ && cd ~/shorts/<slug>
-npm i three@0.160.0 && cp node_modules/three/build/three.module.js web/
+npm i three@0.160.0 postprocessing@6.36.7 && cp node_modules/three/build/three.module.js web/ && cp node_modules/postprocessing/build/index.js web/postprocessing.js
 ln -sfn "$(dirname $(node -e "console.log(require.resolve('playwright'))"))" node_modules/playwright
 mkdir -p work stills frames out
 ```
@@ -27,3 +27,8 @@ Needs Node 22+, Python 3 (numpy, scipy, Pillow), ffmpeg, Playwright Chromium.
 ## v3: merged cast
 - People drawn slimmer (single-stroke limbs, ink-dot hands, smaller boots, longer legs) with all our poses kept (aim, scroll, gavel, point, salute...).
 - Side-view walking from upstream `bodySide` (planted feet, IK knees) as card type `personSide`; outfit keys: jacket, pants, boots, hat (`cap`|`shako`|`shako_tall`|`tophat`|`hair`|`bonnet`), cap, belt, buttons, rifle, skin, moustache. Phase from distance travelled: `dist / (2 * step)`, `stride = step / 0.83`. See CREDITS.md.
+
+## v4: upstream post chain + HD textures
+- Post chain (mromidev, MIT): world-only ink pass `web/up_ink.js` -> two-stage thin-lens blur `web/up_lensblur.js` -> colour grade `web/up_grade.js` (presets `day` / `golden`, at 50 % strength: `window.GRADE_AMT`) + a white-flash effect, run through `postprocessing` 6.36.7 (`web/index.html` has the import map). Cards, sky, clouds and blobs sit on the NOINK layer (still cast shadows). `DBG=old` renders the previous in-house chain for A/B.
+- HD painted textures `web/up_paint.js`: planks (fence, porch, ship deck, desk), roof tiles, stone, clouds. Terrain keeps vertex-coloured grass + sand.
+- Rerun `npm i` relinks: `ln -sfn "$(dirname $(node -e "console.log(require.resolve('playwright'))"))" node_modules/playwright` after any npm install.
