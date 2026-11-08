@@ -27,6 +27,7 @@ ScaledBorderAndShadow: yes
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
 Style: Cap,Baloo 2 ExtraBold,100,&H00FFFFFF,&H00FFFFFF,&H00241A1A,&H64000000,0,0,0,0,100,100,1,0,1,12,5,2,90,90,400,1
+Style: Tag,Baloo 2 ExtraBold,58,&H00FFFFFF,&H00FFFFFF,&H40241A1A,&H00000000,0,0,0,0,100,100,1,0,3,16,0,8,90,90,300,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -39,6 +40,8 @@ for i, (a, t) in enumerate(C):
     col = r"{\c&H3AD2FF&\fs128}" if last else ""   # punchline in warm yellow
     ev.append(f"Dialogue: 0,{ts_ass(a)},{ts_ass(b - 0.02)},Cap,,0,0,0,,{pop}{col}{t.replace('|', chr(92) + 'N')}")
     srt.append(f"{i + 1}\n{ts_srt(a)} --> {ts_srt(b - 0.02)}\n{t.replace('|', chr(10))}\n")
+# context label on the aerial city shot (frames 228-378): Hanoi was a French colony in 1902
+ev.append(f"Dialogue: 1,{ts_ass(7.75)},{ts_ass(12.5)},Tag,,0,0,0,,{{\\fad(250,250)}}Hanoi, {{\\c&H0AD6FF&}}1902{{\\c&HFFFFFF&}} — jajahan Prancis")
 open("work/captions.ass", "w").write(head + "\n".join(ev) + "\n")
 open("out/tikus_hanoi.srt", "w").write("\n".join(srt))
 print(len(C), "chunks; shortest", min(round((C[i+1][0] if i+1 < len(C) else END) - C[i][0], 2) for i in range(len(C))), "s")
