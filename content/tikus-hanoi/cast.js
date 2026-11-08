@@ -671,5 +671,5 @@ export const signBoard = (g, w, h, lines, o = {}) => {
   g.fillStyle = o.bg ?? "#2f6b48"; g.fillRect(0, 0, w, h);
   g.strokeStyle = o.rim ?? "#f4f1e8"; g.lineWidth = Math.round(h * 0.05); g.strokeRect(h * 0.06, h * 0.06, w - h * 0.12, h - h * 0.12);
   g.fillStyle = o.fg ?? "#f4f1e8"; g.textAlign = "center"; g.textBaseline = "middle";
-  lines.forEach((t, i) => { g.font = `900 ${Math.round(h * (o.size ?? 0.42) / lines.length * 1.6)}px sans-serif`; g.fillText(t, w / 2, h * (i + 0.55) / lines.length); });
+  lines.forEach((t, i) => { let px = Math.round(h * (o.size ?? 0.42) / lines.length * 1.6); g.font = `900 ${px}px sans-serif`; const mw = g.measureText(t).width, lim = w - h * 0.3; if (mw > lim) { px = Math.floor(px * lim / mw); g.font = `900 ${px}px sans-serif`; } g.fillText(t, w / 2, h * (i + 0.55) / lines.length); });
 };

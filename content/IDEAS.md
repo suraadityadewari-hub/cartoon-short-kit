@@ -23,7 +23,7 @@ Aturan: baca file ini sebelum menawarkan ide; jangan ulang [x]; tambah ide baru 
   Hook: "Amerika pernah bikin misil yang disetir burung merpati." Twist: berhasil di tes, tapi nggak ada yang menganggapnya serius.
 
 ### Kebijakan & hukum aneh
-- [~] (naskah) Kota yang Bayar Orang Buat Pelihara Tikus — Hanoi 1902 — T  ← REKOMENDASI batch "lagi"
+- [x] Kota yang Bayar Orang Buat Pelihara Tikus — Hanoi 1902 — T  ← REKOMENDASI batch "lagi"
   Hook: "Pemerintah Hanoi bayar warga untuk membasmi tikus. Hasilnya: tikus makin banyak." Twist: ekor dipotong, tikus dilepas biar beranak; ada peternakan tikus.
 - [ ] Tikus yang Punya Pengacara — Autun 1522 (versi lain 1510) — S
   Hook: "Tikus pernah disidang. Dan mereka punya pengacara." Twist: kliennya nggak bisa hadir, jalanan penuh kucing.

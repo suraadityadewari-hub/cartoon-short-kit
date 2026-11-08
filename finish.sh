@@ -19,9 +19,10 @@ python3 - "$SLUG" <<'PY'
 import sys, subprocess
 from PIL import Image
 slug = sys.argv[1]
+D = float(subprocess.run(["ffprobe","-v","error","-show_entries","format=duration","-of","csv=p=0",f"out/{slug}.mp4"],capture_output=True,text=True).stdout)
 ims = []
 for i in range(24):
-    t = 0.5 + i * (39.5 / 24)
+    t = 0.5 + i * ((D - 1.0) / 24)
     subprocess.run(["ffmpeg", "-y", "-v", "error", "-ss", f"{t:.2f}", "-i", f"out/{slug}.mp4", "-frames:v", "1", "-vf", "scale=180:320", f"work/q{i:02d}.jpg"], check=True)
     ims.append(Image.open(f"work/q{i:02d}.jpg"))
 sh = Image.new("RGB", (180 * 8, 320 * 3))

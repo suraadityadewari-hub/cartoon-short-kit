@@ -2,7 +2,7 @@
 # Music: gated RMS 10 dB under the voice, then ducked a further 3.5 dB while the narrator speaks (attack ~30 ms, release ~250 ms).
 # SFX: gated RMS at or below the music, peaks capped at 0.7x the voice peak.
 import sys, subprocess, numpy as np, wave
-SR, FPS, TOTAL_F = 44100, 30, 1202
+SR = 44100
 MUSIC_DB, DUCK_DB, SFX_DB = -10.0, 3.5, -10.0
 def load(p):
     raw = subprocess.run(["ffmpeg", "-v", "error", "-i", p, "-ac", "1", "-ar", str(SR), "-f", "f32le", "-"], capture_output=True, check=True).stdout
@@ -14,9 +14,10 @@ def gated_rms(x, gate_db=-40):
     r, _ = win_rms(x, 0.05); thr = np.max(r) * 10 ** (gate_db / 20); a = r[r > thr]
     return np.sqrt(np.mean(a ** 2)) if len(a) else 1e-9
 db = lambda r: 20 * np.log10(max(r, 1e-12))
-L = int(TOTAL_F / FPS * SR)
+raw = [load(p) for p in sys.argv[1:4]]
+L = max(len(x) for x in raw)  # length follows the longest stem (stems are built to the frame count)
 pad = lambda x: np.pad(x, (0, max(0, L - len(x))))[:L]
-v, mu, fx = (pad(load(p)) for p in sys.argv[1:4])
+v, mu, fx = (pad(x) for x in raw)
 rv = gated_rms(v)
 mu *= 10 ** (MUSIC_DB / 20) * rv / gated_rms(mu)
 fx *= 10 ** (SFX_DB / 20) * rv / gated_rms(fx)

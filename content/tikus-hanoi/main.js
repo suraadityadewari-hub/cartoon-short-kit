@@ -127,7 +127,7 @@ const street = () => {
   for (let x = -60; x <= 60; x += 1.6) box(0.12, 0.8, 0.12, toon("rail", { color: 0x2f4f3a }), x, 0, 10.2);
   box(120, 0.08, 0.08, toon("rail"), 0, 0.72, 10.2);
   const lakeT = P.water(); lakeT.repeat.set(1, 1); WORLD.lake = lakeT;
-  planeXZ(160, 100, toon("lake", { map: lakeT, color: 0xbfe2ee }), 0, -0.25, 61, 8);
+  planeXZ(160, 100, toon("lake", { map: lakeT, color: 0xbfe2ee }), 0, 0.03, 61.2, 8);
   box(160, 0.5, 0.6, toon("quay", { map: UpPaint.stoneHD() }), 0, -0.5, 10.8, 0, 1.5);
   const red = toon("redBr", { color: 0xd23a36 });
   for (let i = 0; i <= 14; i++) { const t = i / 14, y = 0.2 + 1.6 * Math.sin(Math.PI * t), z = 11 + 18 * t; box(2.2, 0.16, 1.35, red, 14, y, z); box(0.1, 0.8, 0.1, red, 13.05, y, z); box(0.1, 0.8, 0.1, red, 14.95, y, z); }
