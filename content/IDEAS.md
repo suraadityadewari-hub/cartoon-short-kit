@@ -57,3 +57,25 @@ Aturan: baca file ini sebelum menawarkan ide; jangan ulang [x]; tambah ide baru 
   Hook: "Juara maraton Olimpiade 1904 ternyata naik mobil." Twist: pemenang asli hampir pingsan karena "minuman energi" berisi racun tikus.
 - [ ] Bunga Seharga Rumah — Tulip mania 1637 — S (krisis dibesar-besarkan)
   Hook: "Satu umbi tulip pernah seharga satu rumah." Twist: cerita bangkrut massal ternyata kebanyakan karangan.
+
+### Batch 3 (2026-11-08)
+- [ ] Perang Gara-Gara Anjing Lepas — Incident at Petrich, Yunani vs Bulgaria Okt 1925 — T (ada korban jiwa ~50; nada hati-hati)
+  Hook: "Tahun 1925, Yunani menyerbu Bulgaria. Gara-gara seekor anjing kabur." Twist: Liga Bangsa-Bangsa menghukum Yunani bayar ganti rugi.
+- [ ] Pesawat Kehabisan Bensin karena Salah Satuan — Gimli Glider, Air Canada 143, 23 Jul 1983 — T (tanpa korban jiwa)
+  Hook: "Pesawat jumbo kehabisan bensin di ketinggian 12 kilometer. Gara-gara salah hitung pon dan kilogram." Twist: mendarat di bekas bandara yang sedang dipakai balap mobil; pilotnya hobi terbang layang.
+- [ ] Roket Rp 2 Triliun Hilang karena Beda Satuan — Mars Climate Orbiter 1999, US$125 juta — T
+  Hook: "NASA kehilangan pesawat ke Mars. Penyebabnya: satu tim pakai meter, satu tim pakai inci." Twist: yang salah bukan roketnya, tapi kalkulatornya.
+- [ ] Orang yang Jualan Es ke Negara Tropis — Frederic Tudor, Martinique 1806 → Kalkuta 1833 — T
+  Hook: "Ada orang yang ditertawakan karena jualan es ke negara panas." Twist: esnya meleleh, dia masuk penjara utang. Lalu jadi "Raja Es" dunia.
+- [ ] Kaisar Amerika yang Diangkat Dirinya Sendiri — Emperor Norton, San Francisco 1859 — T
+  Hook: "Tahun 1859, seorang pria mengumumkan dirinya Kaisar Amerika Serikat. Dan kota itu menurutinya." Twist: dia perintahkan jembatan ke Oakland dibangun; puluhan tahun kemudian jembatannya benar-benar ada.
+- [ ] Penjaga Taman yang Disambar Petir 7 Kali — Roy Sullivan, 1942–1977, rekor Guinness — T
+  Hook: "Ada orang yang disambar petir tujuh kali. Dan selamat." Twist: teman-temannya menjauh tiap langit mendung.
+- [ ] Kucing yang Jadi Wali Kota 20 Tahun — Stubbs, Talkeetna, Alaska 1997–2017 — T (gelar kehormatan)
+  Hook: "Satu kota di Alaska dipimpin seekor kucing selama dua puluh tahun." Twist: kotanya memang tidak punya wali kota manusia.
+- [ ] Saus Tomat yang Dulu Dijual Sebagai Obat — Dr. John Cook Bennett 1834, "pil tomat" — T
+  Hook: "Saus tomat dulu dijual di apotek. Sebagai obat." Twist: pasarnya hancur karena terlalu banyak pil tomat palsu.
+- [ ] Kopi Termahal dari Kotoran Hewan — kopi luwak, zaman tanam paksa — S (asal-usul = versi populer, sumber primer tipis)
+  Hook: "Kopi termahal di dunia berasal dari kotoran hewan. Dan asalnya dari Indonesia." Twist: petani dilarang memetik kopi sendiri, jadi mereka memungut biji dari kotoran luwak.
+- [ ] Penipu yang Menjual Menara Eiffel — Victor Lustig 1925 — T (penjualan ke-2 gagal, korban lapor polisi)
+  Hook: "Seorang penipu pernah menjual Menara Eiffel. Lalu mencoba menjualnya lagi." Twist: korban pertama terlalu malu untuk lapor polisi.
