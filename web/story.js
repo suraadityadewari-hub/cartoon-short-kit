@@ -111,7 +111,7 @@ const CAMS = {
   10: [[800, [0, 3.0, 19.0], [0, 2.6, 26], 40, 0], [883, [0, 2.85, 22.6], [0, 2.72, 26], 36, -3], [890, [0, 2.84, 22.7], [0, 2.72, 26], 36, -3]],
   11: [[890, [0, 3.5, 19.0], [0, 2.7, 26], 42, 0], [960, [0, 3.35, 19.9], [0, 2.7, 26], 41, 0]],
   12: [[960, [-0.85, 2.15, -498.3], [-1.15, 2.05, -502.6], 40, 0], [1018, [-0.9, 2.2, -498.6], [-1.15, 2.1, -502.6], 39, 0], [1046, [-0.9, 3.0, -495.0], [-1.0, 3.15, -503], 42, 0], [1090, [-0.9, 2.95, -495.6], [-1.0, 3.2, -503], 40, 0]],
-  13: [[1090, [7.5, 6.8, 16.5], [2.5, 2.4, 3], 44, 0], [1128, [7.0, 6.2, 15.6], [2.7, 2.4, 3.5], 43, 0], [1170, [3.9, 2.55, 9.6], [3.4, 2.2, 6.2], 36, 0], [TOTAL, [3.85, 2.5, 9.3], [3.45, 2.3, 6.2], 34, 0]],
+  13: [[1090, [7.5, 6.8, 16.5], [2.5, 2.4, 3], 44, 0], [1128, [7.0, 6.2, 15.6], [2.7, 2.4, 3.5], 43, 0], [1170, [4.05, 2.55, 9.6], [3.55, 2.2, 6.2], 36, 0], [TOTAL, [4.0, 2.5, 9.3], [3.6, 2.3, 6.2], 34, 0]],
 };
 /** shots whose camera keys are joined with a Catmull-Rom curve; the others glide straight between keys */
 export const CURVED = new Set([]);
@@ -229,7 +229,7 @@ export const cardsAt = (f, camPos) => {
   if (s.id === 5) {
     add({ id: "potato", type: "potato", x: 3.0, z: 2.75, bite: 0.6, scale: 1.4, blob: false });
     const u = clamp01((f - 470) / 40);
-    add({ id: "ghost", type: "pig", x: 3.35, y: 1.7 + 2.4 * smooth(u), z: 2.6, facing: -1, scale: 1.1, soft: true, shadow: false, blob: false, alpha: smooth((f - 466) / 8) * 0.95, opts: { ghost: true, halo: smooth((f - 474) / 10), expr: "content", wing: (f * 0.09) % 1, tail: f * 6 } });
+    add({ id: "ghost", type: "pig", x: 3.35, y: 1.7 + 2.4 * smooth(u), z: 2.6, facing: -1, scale: 1.1, soft: true, zwrite: true, shadow: false, blob: false, alpha: smooth((f - 466) / 8), opts: { ghost: true, halo: smooth((f - 474) / 10), expr: "content", wing: (f * 0.09) % 1, tail: f * 6 } });
     for (let i = 0; i < 7; i++) {
       const t0 = 452 + i * 2, u2 = (f - t0) / 40, bx = -1 + i * 1.1, bz = -9 + (i % 3);
       if (u2 > 0) add(fx("bird" + i, "bird", ((f * 0.13 + i * 0.3) % 1), bx + (i - 3) * 2.5 * u2, 5.5 + 7 * u2 + (i % 2) * 0.6, bz - 2 * u2, 1.4, { soft: false }));
@@ -289,7 +289,7 @@ export const cardsAt = (f, camPos) => {
     for (let i = 0; i < 3; i++) add({ id: "fl" + i, type: "flowers", x: 2.85 + i * 0.42, z: 6.45 + 0.1 * (i % 2), col: ["#ffd84a", "#f27f9e", "#ffffff"][i], seed: i + 4, scale: 0.7, blob: false });
     if (f >= T.siBabi - 4) {
       const u = (f - (T.siBabi - 4)) / 10;
-      add({ id: "ghost", type: "pig", x: 3.95, y: 1.95 + 0.1 * Math.sin(f * 0.18), z: 6.35, facing: -1, scale: 0.85 * back(u), soft: true, shadow: false, blob: false, alpha: 0.95, opts: { ghost: true, halo: 1, expr: f > T.siBabi + 6 ? "content" : "happy", wing: (f * 0.1) % 1, tail: f * 8 } });
+      add({ id: "ghost", type: "pig", x: 3.72, y: 1.85 + 0.1 * Math.sin(f * 0.18), z: 6.35, facing: -1, scale: 0.68 * back(u), soft: true, zwrite: true, shadow: false, blob: false, alpha: 1, opts: { ghost: true, halo: 1, expr: f > T.siBabi + 6 ? "content" : "happy", wing: (f * 0.1) % 1, tail: f * 8 } });
       add(fx("gsp", "spark", clamp01(u / 1.6), 4.3, 2.9, 6.3, 0.5, { glow: true }));
     }
   }

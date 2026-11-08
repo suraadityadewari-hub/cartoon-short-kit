@@ -37,3 +37,8 @@ Needs Node 22+, Python 3 (numpy, scipy, Pillow), ffmpeg, Playwright Chromium.
 - Keep `tShade` warm-ish and fairly light for golden / dusk: a dark blue `tShade` turns grass teal and hulls grey.
 - Cards (characters) keep their own `cardMat`; flags, ensign and leaves use `toonM()`.
 - Rerun `npm i` relinks: `ln -sfn "$(dirname $(node -e "console.log(require.resolve('playwright'))"))" node_modules/playwright` after any npm install.
+
+## v5.1: captions + loudness trim
+- `captions.py`: chunk list (start s, text; `|` = line break) -> `work/captions.ass` (Baloo 2 ExtraBold 100 px, white, 12 px ink outline, pop-in, punchline in yellow) + `out/<slug>.srt`. Timings: speech segments from `ffmpeg silencedetect` on the voice, split inside a segment by character share. Keep each line within ~900 px (Baloo at 100 px: about 26 chars), else break it.
+- `finish.sh` burns the captions when `work/captions.ass` exists, and now trims the master to exactly -14 LUFS after loudnorm.
+- Soft cards accept `zwrite: true` (writes depth, alphaTest 0.5) so the world ink pass does not draw through them (used for the ghost pig).

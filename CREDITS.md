@@ -5,3 +5,5 @@
 - postprocessing 6.36.7 by Raoul van Rüschen (pmndrs), zlib License (installed from npm, not committed).
 - Directing, caption and mix rules adapted (as written guidance, no code) from **Lemo-Opuscar** by LemoLab, MIT License, https://github.com/lemomo-ai/lemo-opuscar.
 - three.js r160, MIT License (installed from npm, not committed).
+
+- `fonts/Baloo2-ExtraBold.ttf`: Baloo 2 by Ek Type, SIL Open Font License 1.1 (`fonts/OFL.txt`), converted from @fontsource/baloo-2.

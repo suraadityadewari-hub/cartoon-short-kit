@@ -275,7 +275,6 @@ export const pig = (g, opts = {}) => {
   const p = new Pen(g);
   const { phase = 0, walk = 0, expr = "happy", chew = 0, dip = 0, blink = 0, tail = 0, ghost = false, halo = 0, wing = 0, cheek = 0, bandana = false, spud = -1, earW = 0 } = opts;
   const two = Math.PI * 2, u = 3.0, sole = 405;
-  if (ghost) g.globalAlpha = 0.86;
   const base = ghost ? "#fbeef6" : PIG, sh = ghost ? "#d9c9ea" : PIG_SH, sn = ghost ? "#f7d3e3" : SNOUT, hoof = ghost ? "#b9a8c8" : HOOF;
   const bob = walk ? 5 * (0.5 + 0.5 * Math.cos(4 * Math.PI * phase)) * walk : 0;
   const by = 252 - bob;

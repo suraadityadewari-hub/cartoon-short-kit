@@ -403,6 +403,7 @@ const updateCards = (specs, tint) => {
     }
     c.mesh.material.color.set(s.glow ? "#ffffff" : tint);
     c.mesh.material.opacity = s.alpha ?? 1;
+    if (s.soft) { const zw = !!s.zwrite && (s.alpha ?? 1) > 0.5; if (c.mesh.material.depthWrite !== zw) c.mesh.material.depthWrite = zw; c.mesh.material.alphaTest = s.zwrite ? 0.5 : 0.02; }
     c.mesh.castShadow = s.shadow !== false && !s.soft; c.mesh.receiveShadow = !s.soft;
     c.blob.visible = s.blob !== false && !s.soft && s.y === undefined;
     if (c.blob.visible) { const bw = (s.blobW ?? (s.type === "pig" ? 1.0 : 0.75)) * sc; c.blob.scale.set(bw, 1, bw * 0.55); c.blob.position.set(s.x, ground(s.x, s.z) + 0.02, s.z); c.blob.rotation.y = c.mesh.rotation.y; }
