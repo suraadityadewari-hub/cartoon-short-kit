@@ -80,23 +80,46 @@ Aturan: baca file ini sebelum menawarkan ide; jangan ulang [x]; tambah ide baru 
   Hook: "Seorang penipu pernah menjual Menara Eiffel. Lalu mencoba menjualnya lagi." Twist: korban pertama terlalu malu untuk lapor polisi.
 
 ### Batch 4 — Indonesia & Asia (2026-11-08)
-- [ ] Proklamasi Diketik Pakai Mesin Tik Pinjaman — Agustus 1945 — T
+- [ ] Proklamasi Diketik Pakai Mesin Tik Pinjaman — Agustus 1945 — T  [nada: trivia/serius, kurang konyol]
   Hook: "Naskah Proklamasi Indonesia diketik pakai mesin tik pinjaman. Pemiliknya: Angkatan Laut Jerman." Twist: dipinjam dari kantor perwakilan AL Jerman di Jakarta, malam itu juga, di rumah Laksamana Maeda (Jepang).
 - [ ] Bendera Kembar yang Bikin Monaco Protes — 1945 — T
   Hook: "Indonesia pernah diprotes Monaco. Gara-gara bendera." Twist: Merah Putih jauh lebih tua (Majapahit); bedanya cuma ukuran, dan keduanya tetap dipakai sampai sekarang.
-- [ ] Raja Siam Bawa Pulang Borobudur Pakai Gerobak — 1896 — T
+- [ ] Raja Siam Bawa Pulang Borobudur Pakai Gerobak — 1896 — T  [nada: trivia/serius, kurang konyol]
   Hook: "Seorang raja pernah pulang dari Borobudur bawa delapan gerobak oleh-oleh." Twist: oleh-olehnya arca dan relief asli, dan yang mengizinkan pemerintah kolonial Belanda.
-- [ ] Gunung di Sumbawa yang Melahirkan Frankenstein — Tambora 1815 → 1816 — T (kaitan ke penemuan sepeda = S)
+- [ ] Gunung di Sumbawa yang Melahirkan Frankenstein — Tambora 1815 → 1816 — T (kaitan ke penemuan sepeda = S)  [nada: trivia/serius, kurang konyol]
   Hook: "Gara-gara gunung meletus di Sumbawa, Eropa nggak punya musim panas." Twist: hujan terus, sekumpulan penulis terkurung di vila Swiss dan lahirlah novel Frankenstein.
-- [ ] Ledakan yang Terdengar Sampai 4.800 km — Krakatau 1883 — T
+- [ ] Ledakan yang Terdengar Sampai 4.800 km — Krakatau 1883 — T  [nada: trivia/serius, kurang konyol]
   Hook: "Ledakan Krakatau terdengar sampai pulau di seberang Samudra Hindia." Twist: langit merah berbulan-bulan; di Amerika, pemadam kebakaran dikerahkan karena dikira ada kebakaran besar.
 - [ ] Tentara yang Masih Perang 29 Tahun Setelah Perang Selesai — Onoda, Filipina 1974 (juga Nakamura di Morotai 1974) — T
   Hook: "Perang Dunia II selesai 1945. Tapi ada tentara Jepang yang baru menyerah tahun 1974." Twist: dia menolak percaya, sampai mantan komandannya diterbangkan untuk memberi perintah langsung.
-- [ ] Maskapai Pertama Indonesia Terbang di Burma — Seulawah RI-001, 1948–1949 — T
+- [ ] Maskapai Pertama Indonesia Terbang di Burma — Seulawah RI-001, 1948–1949 — T  [nada: trivia/serius, kurang konyol]
   Hook: "Pesawat pertama Indonesia dibeli pakai emas sumbangan warga Aceh." Twist: karena Belanda memblokade, pesawatnya malah disewakan dan beroperasi di Burma (Myanmar).
 - [ ] Shogun yang Lebih Sayang Anjing daripada Rakyat — Tokugawa Tsunayoshi, Jepang 1680–1709 — T
   Hook: "Di Jepang, pernah ada aturan: menyakiti anjing bisa dihukum berat." Twist: rakyat dipajaki untuk membiayai kandang raksasa berisi puluhan ribu anjing jalanan.
 - [ ] Raja Thailand Menawarkan Gajah Perang ke Abraham Lincoln — 1861 — T
   Hook: "Raja Thailand pernah mau mengirim gajah ke Amerika. Untuk membantu Abraham Lincoln." Twist: Lincoln menolak dengan sopan; katanya iklim Amerika kurang cocok untuk gajah.
-- [ ] Petani Gali Sumur, Ketemu 8.000 Tentara — Terakota Xi'an 1974 — T
+- [ ] Petani Gali Sumur, Ketemu 8.000 Tentara — Terakota Xi'an 1974 — T  [nada: trivia/serius, kurang konyol]
   Hook: "Tahun 1974, petani di China menggali sumur. Yang keluar bukan air, tapi tentara." Twist: tentara tanah liat milik kaisar yang terobsesi hidup abadi; salah satu petaninya kemudian kerja tanda tangan buku di museum.
+
+### Batch 5 — Asia/Indonesia, wajib konyol (2026-11-08)
+Kriteria (dari Aditya): harus ada sisi konyol/aneh/lucu seperti Perang Babi & Tikus Hanoi — rencana yang jadi absurd, eskalasi kebesaran, atau penguasa yang kelihatan konyol.
+- [ ] Uang Digunting Jadi Dua — "Gunting Sjafruddin", Maret 1950 — T
+  Hook: "Pemerintah Indonesia pernah menyuruh rakyat menggunting uangnya jadi dua." Twist: separuh kiri tetap dipakai belanja (nilainya separuh), separuh kanan ditukar surat utang negara.
+- [ ] Perang yang Cuma Nembak di Tanggal Ganjil — Kinmen, China vs Taiwan 1958–1979 — T
+  Hook: "Dua negara pernah saling tembak meriam. Tapi cuma di tanggal ganjil." Twist: pelurunya sering berisi selebaran propaganda; selongsongnya kini dijadikan pisau dapur dan dijual ke turis.
+- [ ] Operasi Militer Raksasa Demi Satu Pohon — DMZ Korea, Agustus 1976 — T (ada 2 korban jiwa sebelumnya; nada hati-hati)
+  Hook: "Amerika pernah mengerahkan helikopter, pesawat pengebom, dan kapal induk. Misinya: menebang satu pohon." Twist: pohonnya tidak ditebang habis, tunggulnya ditinggal.
+- [ ] Nikahan Anjing dengan Libur Nasional — Nawab Junagadh, India 1922 — T (angka biaya beda-beda)
+  Hook: "Seorang raja di India pernah bikin pesta pernikahan mewah. Pengantinnya anjing." Twist: hari pernikahannya dijadikan hari libur, tamunya ratusan anjing berpakaian.
+- [ ] Perusahaan Terkaya Dunia yang Bangkrut — VOC 1799 — T
+  Hook: "Perusahaan paling kaya sepanjang sejarah pernah bangkrut." Twist: singkatan VOC diplesetkan jadi "Vergaan Onder Corruptie": tumbang karena korupsi.
+- [ ] Negara yang Melarang Permen Karet — Singapura 1992 — T
+  Hook: "Di Singapura, permen karet pernah dilarang dijual." Twist: gara-garanya permen karet yang ditempel di sensor pintu kereta MRT; pengecualian untuk permen karet "obat".
+- [ ] Pulau Penuh Kelinci yang Dulu Pabrik Racun — Okunoshima, Jepang — T
+  Hook: "Ada pulau di Jepang yang isinya ribuan kelinci lucu." Twist: dulu pulau itu dihapus dari peta karena jadi pabrik gas beracun rahasia.
+- [ ] Kucing Jadi Kepala Stasiun, Selamatkan Kereta — Tama, Wakayama 2007 — T (mirip ide kucing wali kota; pilih salah satu)
+  Hook: "Satu jalur kereta di Jepang hampir ditutup. Penyelamatnya: seekor kucing." Twist: diangkat jadi kepala stasiun lengkap dengan topi; turis datang berbondong-bondong.
+- [ ] Presiden yang Ganti Nama Bulan Pakai Nama Ibunya — Turkmenistan 2002 — T
+  Hook: "Ada presiden yang mengganti nama bulan April dengan nama ibunya." Twist: Januari diganti namanya sendiri.
+- [ ] Naga Sungguhan dari NTT — komodo, ekspedisi 1910–1926 — T (kaitan ke film King Kong = S)
+  Hook: "Pilot pernah cerita lihat 'buaya darat' raksasa di pulau Indonesia. Nggak ada yang percaya." Twist: ternyata ada; ekspedisi Amerika membawa komodo ke kebun binatang New York dan konon menginspirasi King Kong.
