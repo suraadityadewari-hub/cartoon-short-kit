@@ -148,7 +148,7 @@ export const cardsAt = (f, camPos) => {
     const pay = f >= 30 && f < 150, scared = f >= T.banyak + 8;
     const up = scared ? smooth((f - T.banyak - 8) / 8) : 0;
     add(P("official", FR, -0.95, -3.25, 1, { expr: scared ? "shock" : f < 30 ? "stern" : "smug", armF: scared ? "up" : pay ? "coin" : "hip", armB: scared ? "up" : "hip", look: 0.7, tilt: scared ? -3 * Math.sin(f * 0.5) : 0 }, f, 3, { y: 0.5 * up }));
-    add(P("catcher", CA(0), 0.75, -2.35, -1, { expr: f > 70 ? "grin" : "smug", armF: f < 150 ? "dangle" : "hip", armB: "hang", swing: f * 0.25, look: -0.5 }, f, 5));
+    add(P("catcher", CA(0), 0.38, -1.85, -1, { expr: f > 70 ? "grin" : "smug", armF: f < 150 ? "dangle" : "hip", armB: "hang", swing: f * 0.25, look: -0.5 }, f, 5));
     if (s.id === 2) {
       for (let i = 0; i < 46; i++) {
         const side = i % 2 ? 1 : -1, t0 = T.banyak - 14 + (i % 23) * 1.6, sp = 0.05 + 0.03 * rnd(i, 1);

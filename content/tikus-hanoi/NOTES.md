@@ -5,3 +5,4 @@
   di luar kota; hadiah dibatalkan. Wabah pes tetap pecah 1903 (tidak dipakai di naskah).
 - v2 (2026-11-08): fixed floor flicker (z-fighting). Base earth was at y 0, road at 0.01, office/bathroom floors at 0. Earth moved to −0.05 + polygonOffset. Lesson: never stack two floor planes < 5 cm apart; push the base ground back with polygonOffset.
 - v3 (2026-11-08): label konteks "Hanoi, 1902 — jajahan Prancis" di shot kota udara (7.75–12.5 s), style Tag di captions.py.
+- v4 (2026-11-08): shot 1-2 catcher moved to (0.38, -1.85) so the dangled rat hangs in front of the reward table instead of inside it.
