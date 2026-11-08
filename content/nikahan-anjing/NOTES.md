@@ -1,5 +1,5 @@
 # Nikahan Anjing — Nawab Junagadh (ide #47)
-- Akun: @kokbisa.ai. Bahasa Indonesia. 66 s. Status: PRODUKSI — render penuh berjalan (1985 frame); VO rapat 64.2 s (lihat PLAN.md)
+- Akun: @kokbisa.ai. Bahasa Indonesia. 66 s. Status: FINAL — 1985 frame, 66.2 s, -14.0 LUFS, QA lolos (no freeze/black, flicker max 2.0). VO rapat 64.2 s (lihat PLAN.md)
 - Ejaan VO: "Junagad" (bukan Junagadh), tahun dieja. script_v1.txt = versi tampilan.
 
 ## Fakta (T = terverifikasi beberapa sumber, S = satu sumber/anekdot → pakai "konon")
