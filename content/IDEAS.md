@@ -4,6 +4,7 @@ Aturan: baca file ini sebelum menawarkan ide; jangan ulang [x]; tambah ide baru 
 
 ## Sudah dibuat
 - [x] Perang yang Korbannya Cuma Seekor Babi — Pig War 1859 — T — content/perang-babi/ (final 2026-11-08)
+- [x] Kota yang Bayar Orang Buat Pelihara Tikus — Hanoi 1902 — T — content/tikus-hanoi/ (final 2026-11-08)
 
 ## Belum dibuat
 ### Perang & tentara konyol
@@ -23,8 +24,6 @@ Aturan: baca file ini sebelum menawarkan ide; jangan ulang [x]; tambah ide baru 
   Hook: "Amerika pernah bikin misil yang disetir burung merpati." Twist: berhasil di tes, tapi nggak ada yang menganggapnya serius.
 
 ### Kebijakan & hukum aneh
-- [x] Kota yang Bayar Orang Buat Pelihara Tikus — Hanoi 1902 — T  ← REKOMENDASI batch "lagi"
-  Hook: "Pemerintah Hanoi bayar warga untuk membasmi tikus. Hasilnya: tikus makin banyak." Twist: ekor dipotong, tikus dilepas biar beranak; ada peternakan tikus.
 - [ ] Tikus yang Punya Pengacara — Autun 1522 (versi lain 1510) — S
   Hook: "Tikus pernah disidang. Dan mereka punya pengacara." Twist: kliennya nggak bisa hadir, jalanan penuh kucing.
 - [ ] Parlemen yang Kerja Karena Bau — Great Stink London 1858 — T
