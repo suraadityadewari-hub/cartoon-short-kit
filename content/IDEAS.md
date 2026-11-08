@@ -109,7 +109,7 @@ Kriteria (dari Aditya): harus ada sisi konyol/aneh/lucu seperti Perang Babi & Ti
   Hook: "Dua negara pernah saling tembak meriam. Tapi cuma di tanggal ganjil." Twist: pelurunya sering berisi selebaran propaganda; selongsongnya kini dijadikan pisau dapur dan dijual ke turis.
 - [ ] Operasi Militer Raksasa Demi Satu Pohon — DMZ Korea, Agustus 1976 — T (ada 2 korban jiwa sebelumnya; nada hati-hati)
   Hook: "Amerika pernah mengerahkan helikopter, pesawat pengebom, dan kapal induk. Misinya: menebang satu pohon." Twist: pohonnya tidak ditebang habis, tunggulnya ditinggal.
-- [ ] Nikahan Anjing dengan Libur Nasional — Nawab Junagadh, India 1922 — T (angka biaya beda-beda)
+- [~] (naskah) Nikahan Anjing dengan Libur Nasional — Nawab Junagadh, India 1922 — T (angka biaya beda-beda)
   Hook: "Seorang raja di India pernah bikin pesta pernikahan mewah. Pengantinnya anjing." Twist: hari pernikahannya dijadikan hari libur, tamunya ratusan anjing berpakaian.
 - [ ] Perusahaan Terkaya Dunia yang Bangkrut — VOC 1799 — T
   Hook: "Perusahaan paling kaya sepanjang sejarah pernah bangkrut." Twist: singkatan VOC diplesetkan jadi "Vergaan Onder Corruptie": tumbang karena korupsi.
