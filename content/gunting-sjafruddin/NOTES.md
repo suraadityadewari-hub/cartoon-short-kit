@@ -1,5 +1,5 @@
 # Gunting Sjafruddin (1950)
-- Akun: @kokbisa.ai. Bahasa Indonesia. Target ~40 s. Status: NASKAH v2 (revisi ambiguitas) — menunggu persetujuan Aditya. v1 di script_v1.txt.
+- Akun: @kokbisa.ai. Bahasa Indonesia. Target ~40 s. Status: NASKAH v3 (dialog istri jadi kalimat narator, VO laki-laki) — menunggu persetujuan Aditya. v1 di script_v1.txt.
 - Ejaan VO: "Syafruddin" (bukan "Sj") supaya TTS tidak salah baca; tahun dieja.
 ## Fakta (cek 2026-11-08)
 - Berlaku 10 Maret 1950 pukul 20.00; Menkeu Sjafruddin Prawiranegara, Kabinet Hatta. (Republika 10 Mar 2013)
