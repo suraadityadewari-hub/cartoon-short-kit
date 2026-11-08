@@ -78,3 +78,25 @@ Aturan: baca file ini sebelum menawarkan ide; jangan ulang [x]; tambah ide baru 
   Hook: "Kopi termahal di dunia berasal dari kotoran hewan. Dan asalnya dari Indonesia." Twist: petani dilarang memetik kopi sendiri, jadi mereka memungut biji dari kotoran luwak.
 - [ ] Penipu yang Menjual Menara Eiffel — Victor Lustig 1925 — T (penjualan ke-2 gagal, korban lapor polisi)
   Hook: "Seorang penipu pernah menjual Menara Eiffel. Lalu mencoba menjualnya lagi." Twist: korban pertama terlalu malu untuk lapor polisi.
+
+### Batch 4 — Indonesia & Asia (2026-11-08)
+- [ ] Proklamasi Diketik Pakai Mesin Tik Pinjaman — Agustus 1945 — T
+  Hook: "Naskah Proklamasi Indonesia diketik pakai mesin tik pinjaman. Pemiliknya: Angkatan Laut Jerman." Twist: dipinjam dari kantor perwakilan AL Jerman di Jakarta, malam itu juga, di rumah Laksamana Maeda (Jepang).
+- [ ] Bendera Kembar yang Bikin Monaco Protes — 1945 — T
+  Hook: "Indonesia pernah diprotes Monaco. Gara-gara bendera." Twist: Merah Putih jauh lebih tua (Majapahit); bedanya cuma ukuran, dan keduanya tetap dipakai sampai sekarang.
+- [ ] Raja Siam Bawa Pulang Borobudur Pakai Gerobak — 1896 — T
+  Hook: "Seorang raja pernah pulang dari Borobudur bawa delapan gerobak oleh-oleh." Twist: oleh-olehnya arca dan relief asli, dan yang mengizinkan pemerintah kolonial Belanda.
+- [ ] Gunung di Sumbawa yang Melahirkan Frankenstein — Tambora 1815 → 1816 — T (kaitan ke penemuan sepeda = S)
+  Hook: "Gara-gara gunung meletus di Sumbawa, Eropa nggak punya musim panas." Twist: hujan terus, sekumpulan penulis terkurung di vila Swiss dan lahirlah novel Frankenstein.
+- [ ] Ledakan yang Terdengar Sampai 4.800 km — Krakatau 1883 — T
+  Hook: "Ledakan Krakatau terdengar sampai pulau di seberang Samudra Hindia." Twist: langit merah berbulan-bulan; di Amerika, pemadam kebakaran dikerahkan karena dikira ada kebakaran besar.
+- [ ] Tentara yang Masih Perang 29 Tahun Setelah Perang Selesai — Onoda, Filipina 1974 (juga Nakamura di Morotai 1974) — T
+  Hook: "Perang Dunia II selesai 1945. Tapi ada tentara Jepang yang baru menyerah tahun 1974." Twist: dia menolak percaya, sampai mantan komandannya diterbangkan untuk memberi perintah langsung.
+- [ ] Maskapai Pertama Indonesia Terbang di Burma — Seulawah RI-001, 1948–1949 — T
+  Hook: "Pesawat pertama Indonesia dibeli pakai emas sumbangan warga Aceh." Twist: karena Belanda memblokade, pesawatnya malah disewakan dan beroperasi di Burma (Myanmar).
+- [ ] Shogun yang Lebih Sayang Anjing daripada Rakyat — Tokugawa Tsunayoshi, Jepang 1680–1709 — T
+  Hook: "Di Jepang, pernah ada aturan: menyakiti anjing bisa dihukum berat." Twist: rakyat dipajaki untuk membiayai kandang raksasa berisi puluhan ribu anjing jalanan.
+- [ ] Raja Thailand Menawarkan Gajah Perang ke Abraham Lincoln — 1861 — T
+  Hook: "Raja Thailand pernah mau mengirim gajah ke Amerika. Untuk membantu Abraham Lincoln." Twist: Lincoln menolak dengan sopan; katanya iklim Amerika kurang cocok untuk gajah.
+- [ ] Petani Gali Sumur, Ketemu 8.000 Tentara — Terakota Xi'an 1974 — T
+  Hook: "Tahun 1974, petani di China menggali sumur. Yang keluar bukan air, tapi tentara." Twist: tentara tanah liat milik kaisar yang terobsesi hidup abadi; salah satu petaninya kemudian kerja tanda tangan buku di museum.
