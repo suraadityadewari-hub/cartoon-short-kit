@@ -1,5 +1,5 @@
 # Gunting Sjafruddin (1950)
-- Akun: @kokbisa.ai. Bahasa Indonesia. Target ~40 s. Status: PRODUKSI — VO final (Basyar eleven_v4, 55.48 s, 27 segmen), cast + world + story + audio + captions selesai; render penuh berjalan (1695 frame). v1 di script_v1.txt.
+- Akun: @kokbisa.ai. Bahasa Indonesia. Target ~40 s. Status: FINAL — 56.5 s, -14.1 LUFS, flicker max 1.5, out/gunting_syafruddin.mp4 (tidak di-commit, 46 MB)
 - Ejaan VO: "Syafruddin" (bukan "Sj") supaya TTS tidak salah baca; tahun dieja.
 ## Fakta (cek 2026-11-08)
 - Berlaku 10 Maret 1950 pukul 20.00; Menkeu Sjafruddin Prawiranegara, Kabinet Hatta. (Republika 10 Mar 2013)
