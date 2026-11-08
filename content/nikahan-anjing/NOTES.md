@@ -1,5 +1,6 @@
 # Nikahan Anjing — Nawab Junagadh (ide #47)
-- Akun: @kokbisa.ai. Bahasa Indonesia. Target ~40-45 s. Status: NASKAH v1 (menunggu review)
+- Akun: @kokbisa.ai. Bahasa Indonesia. Target ~40-45 s. Status: NASKAH v1 disetujui; VO ElevenLabs Basyar (eleven_v3, 1 take, flow HsOYIUdviqsRS5vTZZfb) — menunggu upload mp3
+- Ejaan VO: "Junagad" (bukan Junagadh), tahun dieja. script_v1.txt = versi tampilan.
 
 ## Fakta (T = terverifikasi beberapa sumber, S = satu sumber/anekdot → pakai "konon")
 - T: Muhammad Mahabat Khan III, Nawab Junagadh (Gujarat, India barat), pecinta anjing; jumlah anjing beda-beda (150 / 800 / 2000) → naskah: "ratusan".
