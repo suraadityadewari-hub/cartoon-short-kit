@@ -1,5 +1,5 @@
 # Nikahan Anjing — Nawab Junagadh (ide #47)
-- Akun: @kokbisa.ai. Bahasa Indonesia. Target ~40-45 s. Status: NASKAH v1 disetujui; VO ElevenLabs Basyar (eleven_v3, 1 take, flow HsOYIUdviqsRS5vTZZfb) — menunggu upload mp3
+- Akun: @kokbisa.ai. Bahasa Indonesia. 66 s. Status: PRODUKSI — render penuh berjalan (1985 frame); VO rapat 64.2 s (lihat PLAN.md)
 - Ejaan VO: "Junagad" (bukan Junagadh), tahun dieja. script_v1.txt = versi tampilan.
 
 ## Fakta (T = terverifikasi beberapa sumber, S = satu sumber/anekdot → pakai "konon")
