@@ -100,7 +100,9 @@ const flagPole = (x, y, z, h, size) => {
 // ---- street (origin), runs along x; colonial row on the north side (front faces at z = -6) ----
 const ROW = [[-46, 10, 8, "#e9b44c"], [-35, 10, 9, "#f0c95a"], [-23.5, 11, 7.5, "#e8bf63"], [-11, 12, 8.5, "#f2cf6e"], [0, 12, 10, "#f4e2ad"], [12, 11, 8, "#efc35a"], [24, 11, 9, "#e9b44c"], [35.5, 10, 7.5, "#f2cf6e"], [46, 9, 8.5, "#e8bf63"]];
 const street = () => {
-  planeXZ(5000, 5000, toon("earth", { map: P.soil(), color: 0xe9d9bc }), 0, 0, 0, 6);
+  // base earth sits 5 cm low and is pushed back in depth so road/alley/floors on top never z-fight
+  const earthM = toon("earth", { map: P.soil(), color: 0xe9d9bc }); earthM.polygonOffset = true; earthM.polygonOffsetFactor = 4; earthM.polygonOffsetUnits = 8;
+  planeXZ(5000, 5000, earthM, 0, -0.05, 0, 6);
   planeXZ(260, 8, toon("road", { map: UpPaint.cobbleHD() }), 0, 0.01, 0, 3);
   const walk = toon("walk", { map: UpPaint.stoneHD() });
   box(260, 0.16, 2, walk, 0, 0, -5, 0, 1.5); box(260, 0.16, 2, walk, 0, 0, 5, 0, 1.5);

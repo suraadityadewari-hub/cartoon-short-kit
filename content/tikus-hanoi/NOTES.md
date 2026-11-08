@@ -3,3 +3,4 @@
 - Fakta (Wikipedia, Atlas Obscura, Saigoneer/Michael Vann): got Doumer >19 km (Mar 1902) jadi jalan tikus ke rumah Prancis;
   penangkap dibayar per tikus; lalu hadiah publik 1 sen per ekor (bukti: ekor); tikus tanpa ekor terlihat; peternakan tikus
   di luar kota; hadiah dibatalkan. Wabah pes tetap pecah 1903 (tidak dipakai di naskah).
+- v2 (2026-11-08): fixed floor flicker (z-fighting). Base earth was at y 0, road at 0.01, office/bathroom floors at 0. Earth moved to −0.05 + polygonOffset. Lesson: never stack two floor planes < 5 cm apart; push the base ground back with polygonOffset.
