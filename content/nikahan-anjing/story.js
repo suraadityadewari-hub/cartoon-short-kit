@@ -234,15 +234,15 @@ export const cardsAt = (f, camPos) => {
       ["beg0", C.BEGUM, T.istri - 30, 80, { expr: "neutral", armF: "hang" }],
       ["beg1", { ...C.BEGUM, coat: "#c8553d", skirt: "#c8553d", hatCol: "#f3c64a" }, T.istri - 14, 80, { expr: "neutral", armF: "hang" }],
     ];
-    who.forEach(([id, o, f0, dur, op], i) => { const c = climb(f, f0, dur); if (!c.on) return; add(P(id, o, DX - 0.12, c.z, -1, { ...op, mode: "march", phase: c.phase, look: -0.5 }, f, 90 + i, { y: c.y, alpha: c.alpha, soft: c.alpha < 1, zwrite: true })); });
-    for (let i = 0; i < 6; i++) { const c = climb(f, T.anjing2 - 34 + i * 6, 48), cc = DOGC[i % 8]; if (!c.on) continue; add(D("pd" + i, { col: cc[0], col2: cc[1], walk: 1, phase: c.phase * 1.6, expr: "pant", collar: SILK[i % 6], patch: i === 1 }, DX + 0.15 * ((i % 2) - 0.5), c.z + 0.1, -1, f, 100 + i, { y: c.y, alpha: c.alpha, soft: c.alpha < 1, zwrite: true })); }
+    who.forEach(([id, o, f0, dur, op], i) => { const c = climb(f, f0, dur); if (!c.on) return; add(P(id, o, DX - 0.12, c.z, -1, { ...op, mode: "march", phase: c.phase, look: -0.5 }, f, 90 + i, { y: c.y, yaw: 0, alpha: c.alpha, soft: c.alpha < 1, zwrite: true })); });
+    for (let i = 0; i < 6; i++) { const c = climb(f, T.anjing2 - 34 + i * 6, 48), cc = DOGC[i % 8]; if (!c.on) continue; add(D("pd" + i, { col: cc[0], col2: cc[1], walk: 1, phase: c.phase * 1.6, expr: "pant", collar: SILK[i % 6], patch: i === 1 }, DX + 0.15 * ((i % 2) - 0.5), c.z + 0.1, -1, f, 100 + i, { y: c.y, yaw: 0, alpha: c.alpha, soft: c.alpha < 1, zwrite: true })); }
     if (f < T.kabur - 30) add(P("nawab0", C.NAWAB, DX - 2.2, DZ + 6.8, -1, { expr: "smug", armF: "hip", armB: "hip", look: -0.4 }, f, 90));
   }
   // ---- 10: one wife steps off for the child ----
   if (s.id === 10) {
     const down = smooth((f - T.turun - 12) / 40), run = clamp01((f - T.turun - 52) / 60);
     const z = down < 1 ? DZ + 0.3 + 1.95 * down : DZ + 2.25 + 1.2 * run, y = 1.08 * (1 - down), x = DX - 0.1 - 0.55 * run;
-    add(P("beg0", C.BEGUM, x, z, down > 0 ? 1 : -1, { expr: f < T.turun ? "neutral" : f < T.turun + 30 ? "shock" : "nervous", armF: f >= T.turun && f < T.turun + 30 ? "point" : "hang", mode: down > 0 && (down < 1 || run < 1) ? "march" : "stand", phase: (f - T.turun) / 12, look: -0.6 }, f, 93, { y }));
+    add(P("beg0", C.BEGUM, x, z, down > 0 ? 1 : -1, { expr: f < T.turun ? "neutral" : f < T.turun + 30 ? "shock" : "nervous", armF: f >= T.turun && f < T.turun + 30 ? "point" : "hang", mode: down > 0 && (down < 1 || run < 1) ? "march" : "stand", phase: (f - T.turun) / 12, look: -0.6 }, f, 93, { y, yaw: down < 1 ? 0 : undefined }));
     add(P("anak", C.ANAK, -5.2, AZ + 4.9, 1, { expr: "nervous", armF: "wave", armB: "up", k: f / 20, look: 0.6 }, f, 110, { scale: 0.62 }));
     if (f >= T.turun - 4 && f < T.turun + 30) add(fx("q", "q", clamp01((f - T.turun + 4) / 10), DX - 0.35, 2.75, DZ + 0.5, 0.55));
   }

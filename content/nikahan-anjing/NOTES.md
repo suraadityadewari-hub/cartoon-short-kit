@@ -1,5 +1,5 @@
 # Nikahan Anjing — Nawab Junagadh (ide #47)
-- Akun: @kokbisa.ai. Bahasa Indonesia. 66 s. Status: FINAL — 1985 frame, 66.2 s, -14.0 LUFS, QA lolos (no freeze/black, flicker max 2.0). VO rapat 64.2 s (lihat PLAN.md)
+- Akun: @kokbisa.ai. Bahasa Indonesia. 66 s. Status: FINAL v2 — 1931 frame, 64.3 s, -14.1 LUFS; "Konon" dipotong dari VO (cut.py, frame 1278–1303 & 1650–1677), hedge pindah ke caption IG; kartu di tangga pesawat yaw 0 (tidak tembus anak tangga), QA lolos (no freeze/black, flicker max 2.0). VO rapat 64.2 s (lihat PLAN.md)
 - Ejaan VO: "Junagad" (bukan Junagadh), tahun dieja. script_v1.txt = versi tampilan.
 
 ## Fakta (T = terverifikasi beberapa sumber, S = satu sumber/anekdot → pakai "konon")
