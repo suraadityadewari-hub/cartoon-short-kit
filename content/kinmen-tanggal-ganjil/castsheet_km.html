@@ -1,0 +1,29 @@
+<!doctype html><html><head><meta charset="utf-8"></head><body style="margin:0;background:#9fc6a0"><canvas id="c" width="2200" height="1600"></canvas>
+<script type="module">
+import * as C from "./cast.js";
+const g = document.getElementById("c").getContext("2d");
+const put = (x, y, s, fn) => { g.save(); g.translate(x, y); g.scale(s, s); fn(); g.restore(); };
+const P = (x, y, o, op, s = 0.5) => put(x, y, s, () => { g.translate(150, 0); C.person(g, o, op); });
+P(0, 0, C.PLA(0), { expr: "determined", armF: "point", armB: "hang" });
+P(220, 0, C.PLA(3), { expr: "grin", armF: "bowl", armB: "bowl", k: 0.2 });
+P(440, 0, C.PENG, { expr: "stern", armF: "write", armB: "hang" });
+P(660, 0, C.PENG, { expr: "smug", armF: "scroll", armB: "hip" });
+P(880, 0, C.ROC(0), { expr: "scared", armF: "cover", armB: "cover" });
+P(1100, 0, C.ROC(1), { expr: "happy", armF: "sack", armB: "sack", sackLabel: "BERAS" });
+P(1320, 0, C.WARGA_K(1), { expr: "nervous", armF: "hang" });
+P(1540, 0, C.PANDAI, { expr: "determined", armF: "gavel", armB: "hang", k: 0.6 });
+P(1760, 0, C.TURIS(0), { expr: "happy", armF: "camera", armB: "camera" });
+P(1980, 0, C.PEMANDU, { expr: "grin", armF: "flag", armB: "hip", k: 0.3 });
+P(0, 520, C.TURIS(1), { expr: "happy", armF: "wave", k: 0.3 });
+P(220, 520, C.TURIS(2), { expr: "grin", armF: "camera", armB: "camera" });
+P(440, 520, C.ROC(2), { expr: "nervous", armF: "read", armB: "read", paper: "PROPAGANDA" });
+put(680, 560, 0.7, () => C.dayCal(g, { n: 2 }));
+put(960, 560, 0.7, () => C.dayCal(g, { n: 3 }));
+put(1240, 560, 0.6, () => C.monthCal(g, { t: 0.7 }));
+put(1660, 540, 0.6, () => C.letter(g, { t: 1 }));
+put(0, 1100, 0.6, () => C.goods(g, "beras")); put(200, 1100, 0.6, () => C.goods(g, "sayur")); put(400, 1100, 0.6, () => C.goods(g, "minyak"));
+put(600, 1080, 0.6, () => C.shell(g, {})); put(760, 1080, 0.6, () => C.shell(g, { open: 0.7 }));
+put(920, 1100, 1, () => C.leaflet(g, 0.1)); put(920, 1240, 1, () => C.leaflet(g, 0.4));
+put(1100, 1100, 0.7, () => C.knife(g)); put(1500, 1080, 0.8, () => C.lantern(g));
+put(1700, 1250, 0.55, () => C.shellPile(g, 1));
+</script></body></html>
