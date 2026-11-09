@@ -1,5 +1,5 @@
 # Perang Tanggal Ganjil — Kinmen 1958–1979 (ide #45)
-- Akun: @kokbisa.ai. Bahasa Indonesia. Target ±50 s. Status: NASKAH v2 (cek ambigu; menunggu ACC)
+- Akun: @kokbisa.ai. Bahasa Indonesia. Target ±50 s. Status: VO digenerate (ElevenLabs Basyar eleven_v3, 1 take, flow rlcvbKqhpWNAQSQ0xVYb) — menunggu upload mp3
 
 ## Fakta (T = beberapa sumber, S = satu sumber)
 - T: 23 Agt 1958 China mulai membombardir Kinmen ("823"), intens 44 hari; hampir 500.000 peluru (HKFP/AFP, Atlas Obscura, Wikipedia).
