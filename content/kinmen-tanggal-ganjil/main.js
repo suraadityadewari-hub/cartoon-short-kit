@@ -141,10 +141,10 @@ const cannon = (x, y, z, ry = 0) => {
 const strait = () => {
   const sea = planeXZ(3000, 3000, toon("sea", { map: seaTex(), color: 0xffffff }), 0, 0, 0, 12); sea.userData.kind = "world";
   // mainland plateau + cliff
-  box(300, 5, 142, toon("cliff", { map: rockTex() }), 0, 0, 89, 0, 6);
+  box(300, 4.9, 142, toon("cliff", { map: rockTex() }), 0, 0, 89, 0, 6);
   planeXZ(300, 142, toon("grassK", { map: UpPaint.grassHD(), color: 0xc4d890 }), 0, 5.01, 89, 6);
   // battery: concrete pad, sandbag horseshoes, three guns facing the island (-z)
-  planeXZ(30, 10, toon("pad", { map: UpPaint.stoneHD() }), 0, 5.02, 27, 2);
+  planeXZ(30, 10, toon("pad", { map: UpPaint.stoneHD() }), 0, 5.05, 27, 2);
   const sb = toon("sandbag", { map: sandbagTex() });
   for (const gx of [-8, 0, 8]) { box(4.2, 0.8, 0.7, sb, gx, 5, 23.3, 0, 1.4); for (const s of [-1, 1]) box(0.7, 0.8, 3.4, sb, gx + s * 2.1, 5, 25.0, 0, 1.4); cannon(gx, 5, 25.6, 0); }
   box(1.4, 1.0, 1.0, toon("crate", { map: UpPaint.planks() }), 11.5, 5, 29); box(1.0, 0.7, 1.0, toon("crate"), 12.7, 5, 29.4);

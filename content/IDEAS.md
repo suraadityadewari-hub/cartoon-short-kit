@@ -105,7 +105,7 @@ Aturan: baca file ini sebelum menawarkan ide; jangan ulang [x]; tambah ide baru 
 Kriteria (dari Aditya): harus ada sisi konyol/aneh/lucu seperti Perang Babi & Tikus Hanoi — rencana yang jadi absurd, eskalasi kebesaran, atau penguasa yang kelihatan konyol.
 - [x] Uang Digunting Jadi Dua — "Gunting Sjafruddin", Maret 1950 — T
   Hook: "Pemerintah Indonesia pernah menyuruh rakyat menggunting uangnya jadi dua." Twist: separuh kiri tetap dipakai belanja (nilainya separuh), separuh kanan ditukar surat utang negara.
-- [~] (naskah) Perang yang Cuma Nembak di Tanggal Ganjil — Kinmen, China vs Taiwan 1958–1979 — T
+- [x] Perang yang Cuma Nembak di Tanggal Ganjil — Kinmen, China vs Taiwan 1958–1979 — T
   Hook: "Dua negara pernah saling tembak meriam. Tapi cuma di tanggal ganjil." Twist: pelurunya sering berisi selebaran propaganda; selongsongnya kini dijadikan pisau dapur dan dijual ke turis.
 - [ ] Operasi Militer Raksasa Demi Satu Pohon — DMZ Korea, Agustus 1976 — T (ada 2 korban jiwa sebelumnya; nada hati-hati)
   Hook: "Amerika pernah mengerahkan helikopter, pesawat pengebom, dan kapal induk. Misinya: menebang satu pohon." Twist: pohonnya tidak ditebang habis, tunggulnya ditinggal.
